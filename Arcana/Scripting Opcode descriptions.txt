@@ -1,0 +1,331 @@
+Scripting Opcode descriptions for Diz
+
+00: (0b) END
+01: (1b) START_LOOP	Starts a loop counter (byte to $14, $16)
+02: (0b) END_LOOP	Loops back to the last 01 and decrements loop value
+03: (3b) JML		Jump long to (xx/xxxx)
+04: (3b) JSL		Jump sub long to (xx/xxxx), saves return address in $14/$16
+05: (0b) RTL		Return long
+06: (1b) WAIT		Delay #frames
+07: (3b) ASM_CALL	Call xx/xxxx
+08: (2b) TASK		
+09: (3b) ON_TICK	Call xx/xxxx when object ticks
+0A: (0b) HALT		"Like END, but doesn't destroy the object"
+0B: (2b) JEQ		Jump if false to (xxxx)
+0C: (2b) JNE		Jump if true to (xxxx)
+0D: (0b) END_TASK	
+0E: (5b) BIN_OP		RAM(2b), AND/OR/ADD/XOR (1b), value (2b)
+0F: (3b) MOV		Set var0-3 (1b) to value (2b)
+10: (0b) ON_TICK	Says it's a NOP
+11: (1Xb) MULTI_JMP	Switch-case. (1 byte: number of 2-byte pointer entries)
+12: (1Xb) MULTI_JSR	Similar to 11, but continues afterwards(?)
+13: (3b) MOV		Set RAM address (2b) to value (1b)
+14: (1b) UNK_TASK
+15: (4b) BIN_OP		var0-3(1b), AND/OR/ADD/XOR (1b), value (2b)
+16: (4b) MOV		Set RAM address (2b) to value (2b)
+17: (2b) BREAK_EQ	JEQ and break out of loop (pop 3 bytes off of stack)
+18: (2b) BREAK_NE	JNE and break out of loop
+19: (3b) BIN_OP		RAM(2b), AND/OR/ADD/XOR (1b), value (1b)
+1A: (2b) JMP		Jump always to (xxxx)
+1B: (2b) JSR		Jump subroutine to (xxxx) - saves ptr in [$14],y
+1C: (0b) RTS		Return subroutine from 1B
+1D: (3b) SET_ANIM_PTR	Saves 3b animation data ptr to object's $0A9F
+1E: (2b) MOV		Load value (2b)
+1F: (2b) MOV		Load RAM (2b)    ($1F $11B9 -> LDA $11B9)
+20: (1b) UNK_20		}Involves applying position/velocity changes
+21: (1b) UNK_21		}
+22: (1b) UNK_22		}
+23: (1b) MOV		STA var0-3 (1b)
+24: (1b) MOV		LDA var0-3 (1b)
+25: (1b) WAIT		Waits var0-3(1b) frames 	(ex: 1F $1097: get line speed, 23 00: STA var0, 25 00: wait var0 frames)
+
+OBJECTS: RAM USED
+(Each object has its own x value and set of variables)
+$063F							- Used for TASK (y-value)
+$06AF		Okay wth is this thing			- Used by SETXPOS and fractional XPOS, and Load_Sprite arg2
+$06F7		XPOS
+$071B		YPOS
+$073F		ZPOS
+$0787		XPOS (mirror)
+$07AB		YPOS (mirror)
+$07CF		ZPOS (mirror)
+$07F3		XPOS fractional
+$0817		YPOS fractional
+$083B		ZPOS fractional
+$085F		XVEL
+$0883		YVEL
+$08A7		ZVEL
+$08CB		XVEL fractional
+$08EF		YVEL fractional
+$0913		ZVEL fractional
+$0937		XPOS sum
+$095B		YPOS sum
+$097F		ZPOS sum
+$09A3		Object var0
+$09C7		Object var1
+$09EB		Object var2
+$0A0F		Object var3
+$0A33		On-tick callback pointer (low)		- Used for ONTICK 09 and 10
+$0A57		On-tick callback pointer (bank)
+$0A7B		Object animation ID/Frame		- Used by SETANIM
+$0A9F		Animation data pointer			- Used for SETANIMPTR 1D
+$0AC3		Animation data pointer (bank)
+$0AE7		Object Script Next - Used for TASK
+$0B43		Object Script Stack Ptr
+$0B9F		Object wait timer, used for WAIT
+$0BFB		Event ptr
+$0C57		Event bank
+$0CB3		Script work register (accumulator)
+$0FEF		- Used by fractional XPOS (velocity?), Set by 78
+$0FFF		- Cleared by 78
+$0FF7		- Used by fractional YPOS (velocity?), Set by 80
+$1007		- Cleared by 80
+$100F		BG_XVEL_?		- Set by 88, 98		Zeroed by D8
+$1017		BG_YVEL_?		- Set by 90, A0		Zeroed by D8
+$101F		BG_XVEL			- Set by 88, 98		Zeroed by D8
+$1027		BG_YVEL			- Set by 90, A0		Zeroed by D8
+$102F		- Similar to XPOS-ZPOS sum (C0)
+$1037		- Similar to XPOS-ZPOS sum (C8)
+
+Graphics:
+0A: (0b) Clear animation loop
+The lower 3 bits (30...37) indicate the # times to loop that command.
+
+[30]: (1b) SET_ANIM		Set animation (If x is not FF, store x in $0A7B,x)
+[38]: (2b) SET_XPOS		Sets cursor X position (Stores 2b in $0787,x, $06F7,x; stores #$8000 in $07F3,x)
+[40]: (2b) SET_YPOS		Sets cursor Y position
+
+[48]: (2b) ADD_XPOS		Adds to $0937,x (finally something easy!)
+[50]: (2b) ADD_YPOS		Adds to $095B,x
+
+[58]: (2b) SET_XVEL
+[60]: (2b) SET_YVEL
+
+[68]: (2b) ADD_XVEL
+[70]: (2b) ADD_YVEL
+
+[78]: (3b) BGH_DISP		Read (1b) x offset, store (2b) in $0FEF,x and zero $0FFF,x; related to object X position
+[80]: (3b) BGV_DISP		Similar to 78; related to object Y position
+[88]: (3b) SET_BG_XVEL		(1b) BG# (0-3), (2b) velocity
+[90]: (3b) SET_BG_YVEL		(1b) BG# (0-3), (2b) velocity
+[98]: (3b) ADD_BG_XVEL		(1b) BG# (0-3), (2b) added velocity
+[A0]: (3b) ADD_BG_YVEL		(1b) BG# (0-3), (2b) added velocity
+[A8]: (0b) INC_ANIM		Increment animation ID (A8 = high speed, AF = low speed)
+[B0]: (0b) DEC_ANIM		Decrement animation ID
+[B8]: (1b) ADD_ANIM		Adds (amount) to the animation ID
+[C0]: (3b) UNK_7  SUM1		Reads (1b)x2 target/offset, reads(2b) and adds them to a sum at $102F,x
+[C8]: (3b) UNK_8  SUM2		Reads (1b)x2 target/offset, reads(2b) and adds them to a sum at $1037,x
+[D0]: (0b) ZERO_VEL		Zeroes velocities
+[D8]: (1b) ZERO_BG_VEL		(1b) BG# (0-3) Zeroes velocities
+
+[E0]: (2b) SET_ZPOS
+[E8]: (2b) ADD_ZPOS		Adds to $097F,x
+[F0]: (2b) SET_ZVEL
+[F8]: (2b) ADD_ZVEL
+
+
+
+
+
+
+Hard to explain (old Sarah notes)
+24: (1b) Loads a RAM value using (1 byte) (0-3)
+	24 00: Load $09A3,x	Cursor position, var0
+	24 01: Load $09C7,x			 	 var1
+	24 02: Load $09EB,x	Attacker	 var2
+	24 03: Load $0A0F,x	Target		 var3
+25: (1b) Same as 24 but loads the var# and sets loopvar $0B9F,Y
+0E: (2,1,2b) Compares RAM to a value using a comparison function,
+	     then stores the result in that RAM address.
+	(2b) RAM address
+	(1b) Function to perform
+	0: AND	1: OR	2: ADC	3: EOR
+	(2b) Operand/comparator
+15: (1,1,2b) Same as 0E, but compares one of $09A3,x, $09C7,x, $09EB,x, $0A0F,x with a value.
+	(1b) RAM address (actor ID)
+	15 00: Load $09A3,x
+	15 01: Load $09C7,x
+	15 02: Load $09EB,x
+	15 03: Load $0A0F,x
+	(1b) Function to perform
+	0: AND	1: OR	2: ADC	3: EOR
+	(2b) Operand/comparator
+
+
+Points of interest (not opcodes just lazy)
+029106: Call 07/B11C (After enemy loot)
+$07/AC6E: Unequip character (2b)
+$00/A00F: Check button press (2b)
+
+
+
+
+
+
+
+
+Text Opcodes	($00 = $1DEC; $06 = $1DF2 here) (pretty sure)
+$00/$02		Inputted pointer/bank
+$04		x offset ($000A,x etc)
+$06/$08		Program counter/bank
+$09		?? Set to 0		11
+$10		?? pausing cntr?	Text_Helper
+$0A		Paused? (01=yes)	7F, 00
+$0C		?? scroll speed?	1C,1D,1E
+$0E		# Digits to write	11
+
+One entry is every $28 bytes, so presumably $27 bytes ($0000,x to $0026,x are used.
+I think there are two entries, called with 00/A0AC (3b ptr)(1b entryno)
+
+Relative RAM
+$000A,x 	X position		op01, op02, op08, op0C
+$000C,x		Y position		op01, op0C
+$000E,x		Formatting		op06
+$0012,x		Vertical spacing	op03 (03 0E)
+$0014,x		??			op04
+$0016,x		?? scroll speed?	00,1C,1D,1E
+$0018,x		Temp PC (holds $06)	Text_Helper
+$001A,x		Temp PC bank ($08)	Text_Helper/Pausing
+$001C,x		Temp PC (holds $06)	op14,10,11
+$001E,x		Temp PC bank ($08)	op14,10,11
+$0020,x		Scroll spd? Temp $16?	1C,1D,1E
+$0022,x		Scroll spd? Temp $0C?	1C,1D,1E
+$0024,x		Holds an X pos?		02,0C
+$0026,x		??			text, 0F
+
+Normal RAM
+$108F,x		Offset for pics		op1B
+$1095		Pausing			op7F
+$1097		?? Scroll speed rltd	op1D
+$1099		?? Scroll speed rltd	op1E
+$109B		Stores a $04		Starting read, A760
+
+Text Writing Opcodes too
+	($00 = $1DEC; $06 = $1DF2 here)
+	(Not so much stored at $000A;$0012; as it is $10C3+A, $10C3+12 etc)
+00		Null terminator/stop reading.
+		Pops PC stack ($001C/1E,x -> $06/$08) after a 10, 14
+01 xx xx	(2b) Cursor moves to (xx, xx) (0,0 is top left)
+		     Stores (1b) in $000A,x; (1b) in $000C,x
+02 04		(1b) ?? Used drawing the menus
+		     Stores (1b) in $0024,x, $000A,x (X position)
+03 0E		(1b) Normal vertical spacing
+		     Stores (1b) in $0012,x
+04 xx		(1b) ??
+		     Stores (1b) in $0014,x
+05 xx xx	(2b) Delays for x?
+		     Stores (1b) in $0022,x; $0C
+		     Stores (1b) in $0020,x; $0016,x
+
+06 xx		(1b) Stores (1b)x2 in $000E,x
+		     Sets offset 0E
+08 XX		(1b) Sets X position in $000A,x
+0C		(0b) I dunno
+		     Runs A8EE, stores $0024,x in $000A,x;
+		     Stores 0 in $000C,x
+		     *Sets something X pos, resets Y pos to 0
+0D		(0b) Newline
+		     Code is complicated, runs A904 and AAFC
+0F		(1b) Sets offset 26 (Immediately checked by Text reading)
+10		(3b) Text subroutine
+		     Stores (3b ptr) in $00/$02
+		     Saves PC $06 (3b ptr) to $04 +1C/1E
+		     Saves params (3b ptr) to $06 for parsing
+11		Uh, skip this one
+
+14		(3b) Writes text from RAM
+		     Stores (3b ptr to 3b RAM addr) in $00/$02
+		     Stores PC ($06/$08) in $001C,x; $001E,x
+		     Stores [$00] (the ptr value) in $06/$08
+1C		(0b) Sets text scroll speed (appears immediately)
+		     Stores #$00FE in $0022,x; $0C
+		     Stores 1 in $0020,x; $0016,x
+1D		(0b) Sets text scroll speed (1 line at a time)
+		     Stores #$00FF in $0022,x; $0C
+		     Stores RAM $1097 in $0020,x; $0016,x
+1E		(0b) Sets text scroll speed (letter by letter)
+		     Stores 1 in $0022,x; $0C
+		     Stores RAM $1099 in $0020,x; $0016,x
+7F		(0b) Pause until A button pressed
+1B		(2b) Draws portraits (non-animated and animated)
+
+		     *1B's $108F is called from $189750, and Event Text $18D4CF
+
+10 YYXX00	Sub: Write text from RAM XXYY (Pre: "Rooks" written to $1581. 10 811500 -> writes "Rooks")
+10 YYXXZZ	Sub: Write text from ROM ZZ/XXYY (10 018608 → Writes text at $08/8601)
+11 01 YYXX00	Load number from RAM XXYY and convert to text (11 01 E7 16 00 → Loads from $16E7)
+11 04 YYXX00	Show up to 4 digits?
+11 00 YYXX00	Show... all digits? (Max HP status screen)
+14 YYXX		Sub: Write text from RAM XXYY (Same as 10, but 2b)
+1B 00 FE	For portraits. Called in dialogue
+1B 00 FF	Clears the card
+1B 00 01	Ariel nonspeaking
+1B 00 00	Ariel speaking
+1B 00 03	Teefa nonspeaking
+1B 00 02	Teefa speaking
+1C		Text appears immediately
+1D		Text scrolls 1 line at a time
+1E		Text scrolls quickly by character
+
+05 01 xx	Types 1 character per xx frames
+05 FF 14	Pause for 14 frames
+
+06 0D		Font color white
+06 0E		Font color yellow/grayed out
+06 01 0E 1D	Text scrolls slowly from mid screen
+06 02 0E 1D	Text scrolls 1 line at a time, indented
+06 03 0E 1D	Text scrolls 1 line at a time
+06 04 0E 1D	S   p   r   e   a   d   o   u   t   t   e   x   t
+06 05 0E 1D	Text displays in chunks
+06 03 0F 1D	Text scrolls 1 line at a time, vertical spacing extra 0.5
+06 03 0D 1D	Text scrolls 1 line at a time, vertical spacing less
+06 03 0E 1C	Text appears immediately
+06 03 0E 1E	Text scrolls quickly by character
+
+Serity
+fairly certain $05[XXYY] is something like 'delay in frames' 
+for XX and 'time between frames' for YY? - it waits 0x14 (20)
+ frames before displaying the name with zero-frames-of-delay 
+per character after a text wipe, then starts displaying 
+characters with a 1 frame delay per character just after
+
+Also Serity
+<05[FF,14]><$0C><$0D><$01[00,06]> could probably be its own macro
+its used on all the macros p much
+altho idk if you can call macros within macros :p
+(Autumn: "All the dialogues and prompts anyway")
+
+Intro crawl $17/
+874E	1
+87BC	2
+887E	3
+88E3	4
+89D7	5
+89DA	6
+8A6D	7
+
+
+**I auto filled with text here
+	***I don't know what this means
+CBB13
+CF7B8
+
+$18CF in intro?
+
+SFX used with 00/9C44:
+05 Cash register
+06 Cancel
+11 Confirm
+13 Stairs
+
+Common subroutines:
+00/A022		Check $21 for button press (2 bytes)
+07/A00F 	Check $31 for button press (2 bytes)
+		(BYsS ^v<>)(AXLR____)
+		 8421 8421  8421____
+		(B) = 8000
+		(A) = 0080
+00/A0AC 	Call text parser (long ptr)
+00/A0BD		Call RNG (1 byte), something with screen
+00/9C44 	Play SFX xx
+03/E2A8		Set up dialogue cursor (Copies 3b ptr values to end of RAM)

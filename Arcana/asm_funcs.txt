@@ -1,0 +1,1275 @@
+; IMPORTANT NOTE:
+;   Be sure to use appropriate datatypes with the "PARAMS" option, as using inappropriate
+;   datatypes will cause the dumper to not work properly, since the parameters would be read
+;   wrong, most likely "desyncing" the instructions read
+
+
+; Format:
+;   ASM_FUNCTION ADDRESS
+;   PARAMS=datatype1,datatype2,...,datatypeN (optional)
+;   COMMENT=some comment                     (optional)
+
+; Shinespark's note: I'm just gonna put unsigned (u) for the params unless I know it.
+
+
+ASM_FUNCTION 00814F
+  COMMENT = NMI disable
+
+ASM_FUNCTION 008163
+  COMMENT = NMI enable
+
+ASM_FUNCTION 008177
+  COMMENT = Display Force Blanking
+
+ASM_FUNCTION 00818B
+  COMMENT = Set Display
+
+ASM_FUNCTION 0081B8
+  COMMENT = Set BG mode
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 0081D7
+  COMMENT = Set OBJ Address
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 008204
+  COMMENT = Set OBJ size
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 00822B
+  COMMENT = Unknown
+
+ASM_FUNCTION 00826A
+  COMMENT = Gfx Dungeon Stuff
+
+ASM_FUNCTION 0082A7
+  COMMENT = Unknown
+
+ASM_FUNCTION 0082E6
+  COMMENT = Unknown
+
+ASM_FUNCTION 008323
+  COMMENT = Update screen (parameter?)
+
+ASM_FUNCTION 006379
+  COMMENT = DMA, OAM transfer
+
+ASM_FUNCTION 00839F
+  COMMENT = Polling stuff
+
+ASM_FUNCTION 0093DB
+  COMMENT = Advance polling
+
+ASM_FUNCTION 008400
+  COMMENT = Update bg scroll
+
+ASM_FUNCTION 008465
+  COMMENT = Video stuff
+
+ASM_FUNCTION 0084FE
+  COMMENT = Source Decomp80 (Sets up decompressor with a pointer to an entry like 80 xx xx [3b ptr] xx xx, I call those 8-byte entries "Decomp80" for short)
+
+ASM_FUNCTION 00851D
+  COMMENT = Unknown
+
+ASM_FUNCTION 008521
+  COMMENT = Decomp80 Setup
+
+ASM_FUNCTION 008581
+  COMMENT = Unknown
+
+ASM_FUNCTION 008585
+  COMMENT = Display Stuff
+
+ASM_FUNCTION 008622
+  COMMENT = Unknown
+
+ASM_FUNCTION 008694
+  COMMENT = Load Gfx
+
+ASM_FUNCTION 00872A
+  COMMENT = Unknown
+
+ASM_FUNCTION 008762
+  COMMENT = Decompression
+
+ASM_FUNCTION 00888B
+  COMMENT = Why would you do this
+
+ASM_FUNCTION 0088B2
+  COMMENT = Unknown
+
+ASM_FUNCTION 0088DE
+  COMMENT = Wait for Vblank
+
+ASM_FUNCTION 0089F1
+  COMMENT = RNG - Random Number Generator. Returns a number that's modulus of the current accumulator. The full 2 byte RNG is saved to $1E20.
+
+ASM_FUNCTION 008A39
+  COMMENT = Multiply to 1E00 - Used for larger multiplication.
+
+ASM_FUNCTION 008B11
+  COMMENT = Set Mode7
+
+ASM_FUNCTION 008C84
+  COMMENT = Init Loops
+
+ASM_FUNCTION 008D24
+  COMMENT = Setup Code Ptr
+
+ASM_FUNCTION 008D33
+  COMMENT = Add New Script
+
+ASM_FUNCTION 008DA5
+  COMMENT = Load Code Handling
+
+ASM_FUNCTION 008DB4
+  COMMENT = Sub: Load Stuff
+
+ASM_FUNCTION 008FE0
+  COMMENT = Update/Restart Main Loop
+
+ASM_FUNCTION 009008
+  COMMENT = Main Loop Pointer Setup
+
+ASM_FUNCTION 00902B
+  COMMENT = Read ActionScript Code
+
+ASM_FUNCTION 00903C
+  COMMENT = Read Actionscript Animation Code
+
+ASM_FUNCTION 009881
+  COMMENT = Sub: Load Tileset
+
+ASM_FUNCTION 0098E1
+  COMMENT = Load Credits Text
+
+ASM_FUNCTION 00995C
+  COMMENT = A buncha stuff
+
+ASM_FUNCTION 009A6C
+  COMMENT = Allocate Script Slot
+
+ASM_FUNCTION 009AF0
+  COMMENT = Get ASM code
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009AF8
+  COMMENT = Get ASM code
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009B00
+  COMMENT = Get ASM code
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 009B07
+  COMMENT = Get ASM code
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 009B26
+  COMMENT = Move Object
+
+ASM_FUNCTION 009C0A
+  COMMENT = Sound byte
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009C19
+  COMMENT = Sound stuff
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009C3C
+  COMMENT = Get/Set Music
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009C44
+  COMMENT = Get/Set Sound Effect
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009C5D
+  COMMENT = Load Sprite Setup
+  PARAMS  = imm_u16, imm_u16, imm_u16, imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION 009CAE
+  COMMENT = Load Sprite
+  PARAMS  = imm_u8, imm_u8, imm_u16, imm_u16, imm_u16, imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION 009CBC
+  COMMENT = Load Graphics
+  PARAMS  = imm_u8, imm_u16, imm_u16, imm_u16, imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION 009CC9
+  COMMENT = Menu Stuffs
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009CDD
+  COMMENT = Battle related
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009CE5
+  COMMENT = Unknown setup
+
+ASM_FUNCTION 009CF9
+  COMMENT = Decomp80 setup
+  PARAMS  = addr_24
+
+ASM_FUNCTION 009D07
+  COMMENT = 00/8698 setup
+  PARAMS  = addr_24
+
+ASM_FUNCTION 009D1F
+  COMMENT = 00/8698 setup
+  PARAMS  = addr_24, imm_u16
+
+ASM_FUNCTION 009D34
+  COMMENT = Setup: Display stuff
+  PARAMS  = imm_u8, imm_u16, imm_u16, imm_u8, imm_u16
+
+ASM_FUNCTION 009D51
+  COMMENT = 00/872E setup
+  PARAMS  = imm_u16, imm_u8, imm_u16, imm_u16
+
+ASM_FUNCTION 009D69
+  COMMENT = Read Background mode
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009D6F
+  COMMENT = Display brancher
+  PARAMS  = imm_u8, imm_u8, imm_u16, imm_u16
+
+ASM_FUNCTION 009D93
+  COMMENT = Set Sprite mode
+  PARAMS  = imm_u8, imm_u16, imm_u8
+
+ASM_FUNCTION 009DA8
+  COMMENT = Main Screen add
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009DB6
+  COMMENT = Main Screen remove
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009DC6
+  COMMENT = Sub Screen add
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009DD7
+  COMMENT = Sub Screen remove
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009DEA
+  COMMENT = Some subroutine at 0189AF
+  PARAMS  = imm_u8, imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 009E16
+  COMMENT = Set Mode7
+  PARAMS  = imm_u8, imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 009E33
+  COMMENT = Sub: Set $1068, sets up 9E39
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 009E46
+  COMMENT = Sub: Add to $1068, sets up 9E39
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 009E53
+  COMMENT = Sub: 9E53, sets 106A/106C, sets up 9E39
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 009E62
+  COMMENT = Sub: 9E62, sets 106A/106C, sets up 9E39
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 009E79
+  COMMENT = Mosaic BG Enable
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009E8A
+  COMMENT = Mosaic Clear
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009E9D
+  COMMENT = Set Mosaic Size
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009EB8
+  COMMENT = Increase Mosaic Size
+
+ASM_FUNCTION 009ECC
+  COMMENT = Decrease Mosaic Size
+
+ASM_FUNCTION 009EE0
+  COMMENT = HDMA transfer
+  PARAMS  = imm_u8, imm_u8, imm_u8, addr_24
+
+ASM_FUNCTION 009F1F
+  COMMENT = Remove HDMA channel
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009F31
+  COMMENT = HDMA disable
+
+ASM_FUNCTION 009F35
+  COMMENT = HDMA enable 1
+
+ASM_FUNCTION 009F3C
+  COMMENT = Color Add Select
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 009F4F
+  COMMENT = Color Math Designation
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 009F70
+  COMMENT = Set CGADSUB
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 009F70
+  COMMENT = Set RGB
+  PARAMS  = imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 009FA1
+  COMMENT = Set color planes
+
+ASM_FUNCTION 009F83
+  COMMENT = Set RGB
+  PARAMS  = imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 009FA1
+  COMMENT = Set color plane intensity 
+
+ASM_FUNCTION 009FE2
+  COMMENT = Add RGB
+  PARAMS  = imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 00A00F
+  COMMENT = Was Button Pressed?
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 00A022
+  COMMENT = Was Button Pressed? 2
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 00A035
+  COMMENT = Decompression setup 2
+  PARAMS  = addr_24, addr_24
+
+ASM_FUNCTION 00A051
+  COMMENT = Loop til (RAM) is (val)
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 00A06F
+  COMMENT = (RAM) minus (val)
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 00A07B
+  COMMENT = Unknown
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 00A097
+  COMMENT = Text Init
+  PARAMS  = addr_24, imm_u8
+
+ASM_FUNCTION 00A0A8
+  COMMENT = Do Stuff
+
+ASM_FUNCTION 00A0AC
+  COMMENT = Setup Text Parser
+  PARAMS  = addr_24, imm_u8
+
+ASM_FUNCTION 00A0BD
+  COMMENT = RNG = Random Number Generator
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 00A0C4
+  COMMENT = Update screen
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 00A0CB
+  COMMENT = Unfade (Increase lighting by 1/16)
+
+ASM_FUNCTION 00A0DB
+  COMMENT = Fade (Decrease lighting by 1/16)
+
+ASM_FUNCTION 00A105
+  COMMENT = Gfx: Get Palette 2
+  PARAMS  = addr_24, imm_u8, imm_u16
+
+ASM_FUNCTION 00A140
+  COMMENT = Gfx: Get Palette
+  PARAMS  = addr_24, imm_u8, imm_u16
+
+ASM_FUNCTION 00A162
+  COMMENT = Confusing RAM transfer
+  PARAMS  = addr_24, imm_u8, imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 00A45E
+  COMMENT = Sub: Event ID handling
+
+ASM_FUNCTION 00A760
+  COMMENT = Involved in text display
+
+ASM_FUNCTION 00C8EF
+  COMMENT = ??? Clears spell results and does something with turn order
+
+ASM_FUNCTION 00CA5D
+  COMMENT = Advance turn order
+
+ASM_FUNCTION 00CABE
+  COMMENT = Stage Select transfer
+
+ASM_FUNCTION 00CB99
+  COMMENT = 
+
+ASM_FUNCTION 00CC67
+  COMMENT = 
+
+ASM_FUNCTION 00CD13
+  COMMENT = 
+
+ASM_FUNCTION 00CD55
+  COMMENT = 
+
+ASM_FUNCTION 00CD7E
+  COMMENT = 
+
+ASM_FUNCTION 00CDB7
+  COMMENT = 
+
+ASM_FUNCTION 00CE9E
+  COMMENT = 
+
+ASM_FUNCTION 00CEE4
+  COMMENT = Loading save file
+
+ASM_FUNCTION 00D01D
+  COMMENT = Load Stage Select file
+
+ASM_FUNCTION 00D050
+  COMMENT = Zero $117x vals
+
+ASM_FUNCTION 00D063
+  COMMENT = 
+
+ASM_FUNCTION 00D40F
+  COMMENT = Check for Title screen start press
+
+ASM_FUNCTION 00D416
+  COMMENT = Playing sound test
+
+ASM_FUNCTION 0180F4
+  COMMENT = Zero All Stats
+
+ASM_FUNCTION 018118
+  COMMENT = Zero enemy stats
+
+ASM_FUNCTION 01813F
+  COMMENT = Zero Condition
+
+ASM_FUNCTION 018154
+  COMMENT = Init Kill Enemies
+
+ASM_FUNCTION 018174
+  COMMENT = Init Battle Order
+
+ASM_FUNCTION 0181A6
+  COMMENT = Erase enemy Order
+
+ASM_FUNCTION 0181C6
+  COMMENT = Zero LVLs
+
+ASM_FUNCTION 0181D7
+  COMMENT = Zero Party current HP
+
+ASM_FUNCTION 0181E8
+  COMMENT = Zero Party current MP
+
+ASM_FUNCTION 0181F9
+  COMMENT = Zero copy of current HP
+
+ASM_FUNCTION 01820A
+  COMMENT = Zero copy of current MP
+
+ASM_FUNCTION 01821B
+  COMMENT = Zero party max HP
+
+ASM_FUNCTION 01822C
+  COMMENT = Zero party max MP
+
+ASM_FUNCTION 01823D
+  COMMENT = Delete Spirits current HP
+
+ASM_FUNCTION 018251
+  COMMENT = Delete Spirits current MP
+
+ASM_FUNCTION 018265
+  COMMENT = Zero card inventory
+
+ASM_FUNCTION 018274
+  COMMENT = Zero item inventory
+
+ASM_FUNCTION 018286
+  COMMENT = Zero spell lists
+
+ASM_FUNCTION 0182A1
+  COMMENT = Zero equipment inventory
+
+ASM_FUNCTION 0182B6
+  COMMENT = Zero stat modifiers
+
+ASM_FUNCTION 0182D3
+  COMMENT = Zero equipped items
+
+ASM_FUNCTION 0182EE
+  COMMENT = Zero enemy equipped items
+
+ASM_FUNCTION 018309
+  COMMENT = Zero Attribute bits
+
+ASM_FUNCTION 018A38
+  COMMENT = Is Battle State Negative?
+
+ASM_FUNCTION 018A25
+  COMMENT = Is Current Event [x]?
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 019BD8
+  COMMENT = Is Spirit Selected?
+
+ASM_FUNCTION 01B9B4
+  COMMENT = 
+
+ASM_FUNCTION 01B9D6
+  COMMENT = 
+
+ASM_FUNCTION 01B9F8
+  COMMENT = 
+
+ASM_FUNCTION 01BA1E
+  COMMENT = 
+
+ASM_FUNCTION 01BB1A
+  COMMENT = Sub: Credits Something 1
+
+ASM_FUNCTION 01BB2B
+  COMMENT = Sub: Credits Something 2
+
+ASM_FUNCTION 01BB65
+  COMMENT = Sub: Credits Something 3
+
+ASM_FUNCTION 01BB96
+  COMMENT = 
+
+ASM_FUNCTION 01BC0A
+  COMMENT = Update credits distance
+
+ASM_FUNCTION 01BC49
+  COMMENT = End credits check
+
+ASM_FUNCTION 01BC5F
+  COMMENT = Advance the credits
+
+ASM_FUNCTION 038001
+  COMMENT = Sub: Dungeon map stuff
+
+ASM_FUNCTION 038007
+  COMMENT = 
+
+ASM_FUNCTION 03B351
+  COMMENT = Stairs related
+
+ASM_FUNCTION 038761
+  COMMENT = 
+
+ASM_FUNCTION 0387E3
+  COMMENT = Sub: Stavery Door (LET ME IN)
+
+ASM_FUNCTION 0387FD
+  COMMENT = Play current bonk
+
+ASM_FUNCTION 03883F
+  COMMENT = Map stuff and vblank
+
+ASM_FUNCTION 03887A
+  COMMENT = Sub: Involved in uncompressing the dungeon graphics
+
+ASM_FUNCTION 038984
+  COMMENT = Dungeon: Load Field of View
+
+ASM_FUNCTION 03A489
+  COMMENT = Maps: Clear Map Progress
+
+ASM_FUNCTION 03A494
+  COMMENT = Maps: Update Map Progress
+
+ASM_FUNCTION 03A520
+  COMMENT = Sub: Default Dungeon BGM
+
+ASM_FUNCTION 03A54C
+  COMMENT = Sub: Darwin's Theme
+
+ASM_FUNCTION 03A581
+  COMMENT = Maps: Check for exit location
+
+ASM_FUNCTION 03ADE0
+  COMMENT = Do stuff with event 69
+
+ASM_FUNCTION 03ADEB
+  COMMENT = Event 69 check
+
+ASM_FUNCTION 03B357
+  COMMENT = Entering Town
+
+ASM_FUNCTION 03B379
+  COMMENT = Town Loading
+
+ASM_FUNCTION 03B3FD
+  COMMENT = More Town Loading
+
+ASM_FUNCTION 03DA71
+  COMMENT = Shop related
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 03E2A8
+  COMMENT = Shop cursor setup
+  PARAMS  = addr_24
+
+ASM_FUNCTION 03E4F8
+  COMMENT = Store [RAM] into [RAM]
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 03E509
+  COMMENT = Set Cursors
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 03E523
+  COMMENT = Involves the 063x vars (sprite data)
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 03E562
+  COMMENT = Color stuff
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 03E57D
+  COMMENT = Adjust color math
+
+ASM_FUNCTION 03E595
+  COMMENT = $1893 = 0, $2131 color math = E000
+
+ASM_FUNCTION 03E59F
+  COMMENT = Subtract color math designation
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 03E5BB
+  COMMENT = Add color math designation
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 03EAFD
+  COMMENT = Map Drawing
+
+ASM_FUNCTION 078001
+  COMMENT = Is Fighting Final Boss? - Returns 1 if true
+
+ASM_FUNCTION 078014
+  COMMENT = Get Levelup spell - Seems to return 0 on success. Maybe for notifying if you learned a new spell?
+
+ASM_FUNCTION 078043
+  COMMENT = Get Spell List [char ID]
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 0781BB
+  COMMENT = Condition related
+
+ASM_FUNCTION 0781E9
+  COMMENT = Load battle music
+
+ASM_FUNCTION 0781F0
+  COMMENT = Clear Condition mirror
+
+ASM_FUNCTION 078219
+  COMMENT = Get Condition Change (returns (-1,4) for a new status change. 0: paralyzed, 1: petrified, 2: confused, 3: sleep, 4: satisfactory, -1: no change)
+
+ASM_FUNCTION 0782BF
+  COMMENT = 
+
+ASM_FUNCTION 078C8F
+  COMMENT = 
+
+ASM_FUNCTION 078D46
+  COMMENT = Draw HP?
+
+ASM_FUNCTION 078D8E
+  COMMENT = Deduct MP - Returns 1 if success, 0 if failed
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 078DB0
+  COMMENT = Sub: Draw MP ?
+
+ASM_FUNCTION 078DF0
+  COMMENT = Sub: Draw Level
+
+ASM_FUNCTION 078F92
+  COMMENT = Load Playable Character name
+
+ASM_FUNCTION 07906B
+  COMMENT = Load Graphics
+
+ASM_FUNCTION 079198
+  COMMENT = Get active spirit ID
+
+ASM_FUNCTION 0791C8
+  COMMENT = 
+
+ASM_FUNCTION 0791E9
+  COMMENT = Some input listener
+
+ASM_FUNCTION 07925E
+  COMMENT = Draw RGB to text buffer
+
+ASM_FUNCTION 079270
+  COMMENT = Load window color RGB
+
+ASM_FUNCTION 0792A2
+  COMMENT = Also involves window color
+
+ASM_FUNCTION 0792E7
+  COMMENT = Some input check
+
+ASM_FUNCTION 07933A
+  COMMENT = Checks for input (probably)
+
+ASM_FUNCTION 07938D
+  COMMENT = 
+
+ASM_FUNCTION 0793C7
+  COMMENT = 
+
+ASM_FUNCTION 0793D7
+  COMMENT = 
+
+ASM_FUNCTION 0794AC
+  COMMENT = 
+
+ASM_FUNCTION 07A78C
+  COMMENT = Spirit regen
+
+ASM_FUNCTION 07954A
+  COMMENT = 
+
+ASM_FUNCTION 079604
+  COMMENT = 
+
+ASM_FUNCTION 07964E
+  COMMENT = 
+
+ASM_FUNCTION 07968D
+  COMMENT = Involves updating position and anim frame from a table
+
+ASM_FUNCTION 0796D2
+  COMMENT = Show Card Menu
+
+ASM_FUNCTION 079729
+  COMMENT = Get current card
+
+ASM_FUNCTION 079739
+  COMMENT = Get current card description
+
+ASM_FUNCTION 07977F
+  COMMENT = Pull item info
+
+ASM_FUNCTION 079817
+  COMMENT = 
+
+ASM_FUNCTION 079856
+  COMMENT = Get current spell description
+
+ASM_FUNCTION 079BD3
+  COMMENT = Inventory: Delete Card - returns 1 if a slot is cleared
+
+ASM_FUNCTION 079BF8
+  COMMENT = Inventory: Delete Item
+
+ASM_FUNCTION 079C11
+  COMMENT = Inventory: Unequimp Equipment - returns 1 if successful
+
+ASM_FUNCTION 079C2D
+  COMMENT = Inventory: Delete Equipment - returns 1 if successful
+
+ASM_FUNCTION 079C79
+  COMMENT = Inventory: Key Equipment check - returns 1 if you're trying to drop the Crystal Sword or Spirit Sword
+
+ASM_FUNCTION 079C95
+  COMMENT = Get Equipment ID
+
+ASM_FUNCTION 079CB4
+  COMMENT = 
+
+ASM_FUNCTION 079CE4
+  COMMENT = 
+
+ASM_FUNCTION 079DCF
+  COMMENT = 
+
+ASM_FUNCTION 079DF5
+  COMMENT = Draw Magic Menu-1
+
+ASM_FUNCTION 079E36
+  COMMENT = 
+
+ASM_FUNCTION 079E7A
+  COMMENT = 
+
+ASM_FUNCTION 079ED6
+  COMMENT = 
+
+ASM_FUNCTION 079F16
+  COMMENT = 
+
+ASM_FUNCTION 079F44
+  COMMENT = 
+
+ASM_FUNCTION 079F72
+  COMMENT = 
+
+ASM_FUNCTION 079FA6
+  COMMENT = 
+
+ASM_FUNCTION 079FCE
+  COMMENT = 
+
+ASM_FUNCTION 079FF6
+  COMMENT = 
+
+ASM_FUNCTION 07A01E
+  COMMENT = 
+
+ASM_FUNCTION 07A071
+  COMMENT = 
+
+ASM_FUNCTION 07A0AA
+  COMMENT = 
+
+ASM_FUNCTION 07A0C7
+  COMMENT = If it is 1, return 0 (Why is THIS A FUNCTION)
+
+ASM_FUNCTION 07A0D4
+  COMMENT = Sub: Set current area to current chapter's town
+
+ASM_FUNCTION 07A0DF
+  COMMENT = 
+
+ASM_FUNCTION 07A0F0
+  COMMENT = 
+
+ASM_FUNCTION 07A11B
+  COMMENT = Related to using items in battle
+
+ASM_FUNCTION 07A199
+  COMMENT = Draw Magic Menu-2
+
+ASM_FUNCTION 07A23E
+  COMMENT = Draw Equipment Menu
+
+ASM_FUNCTION 07A340
+  COMMENT = Draw Weapon screen from character
+
+ASM_FUNCTION 07A405
+  COMMENT = 
+
+ASM_FUNCTION 07A45B
+  COMMENT = Empty item slot
+
+ASM_FUNCTION 07A484
+  COMMENT = 
+
+ASM_FUNCTION 07A4BA
+  COMMENT = 
+
+ASM_FUNCTION 07A4D6
+  COMMENT = Empty Equip item slot
+
+ASM_FUNCTION 07A506
+  COMMENT = 
+
+ASM_FUNCTION 07A57A
+  COMMENT = 
+
+ASM_FUNCTION 07A5F7
+  COMMENT = Spirit check
+
+ASM_FUNCTION 07A639
+  COMMENT = Related to spirits owned
+
+ASM_FUNCTION 07A672
+  COMMENT = Status screen prep (Stores the stats in temp variables to be drawn to the screen)
+
+ASM_FUNCTION 07A816
+  COMMENT = Compare floor tile (returns true if [val] matches tile you're standing on
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07A827
+  COMMENT = Treasure: Save value
+
+ASM_FUNCTION 07A83D
+  COMMENT = Get treasure contents
+
+ASM_FUNCTION 07A92E
+  COMMENT = Load card name
+
+ASM_FUNCTION 07A958
+  COMMENT = Load item name
+
+ASM_FUNCTION 07A982
+  COMMENT = Load Equipment name
+
+ASM_FUNCTION 07A9AC
+  COMMENT = Truncate strings
+
+ASM_FUNCTION 07A9D0
+  COMMENT = Add card to inventory
+
+ASM_FUNCTION 07AA14
+  COMMENT = Add item to inventory
+
+ASM_FUNCTION 07AA3D
+  COMMENT = Add equipment to inventory
+
+ASM_FUNCTION 07AA61
+  COMMENT = Add GP to total
+
+ASM_FUNCTION 07AA88
+  COMMENT = Get Current Attribute (returns 0: no attribute, 1-4: attribute, 5: some combination??)
+
+ASM_FUNCTION 07AACF
+  COMMENT = Check Active Spirit (returns 0 if given spirit is active) (ie 2=Dao)
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07AAE0
+  COMMENT = Map HP/MP
+
+ASM_FUNCTION 07ABBA
+  COMMENT = Get Slot2 Weird Offset (returns 4, or party ID - 1)
+
+ASM_FUNCTION 07ABCB
+  COMMENT = Get Slot3 Weird Offset
+
+ASM_FUNCTION 07ABDC
+  COMMENT = Get Slot4 Weird Offset
+
+ASM_FUNCTION 07ABED
+  COMMENT = Wipe Spells
+
+ASM_FUNCTION 07AC08
+  COMMENT = Get Join Spells
+
+ASM_FUNCTION 07ACAE
+  COMMENT = Move Menu Cursor
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07AE65
+  COMMENT = Get Menu cursor coords
+
+ASM_FUNCTION 07AEDD
+  COMMENT = Does Object var2 = $1575?
+
+ASM_FUNCTION 07AF24
+  COMMENT = Does [val] = $1575?
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07AF39
+  COMMENT = Set $1575 from [val]
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07AF6C
+  COMMENT = Is Enemy [x] Attack Done?
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07AF9E
+  COMMENT = Store [val] in $11B5
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07AFAA
+  COMMENT = Compare an [object var] to $11B5
+  PARAMS  = imm_u8, imm_u8
+
+ASM_FUNCTION 07B05D
+  COMMENT = Compare $11B5,[val] to $11B5,[val]
+  PARAMS  = imm_u8, imm_u8
+
+ASM_FUNCTION 07B081
+  COMMENT = Compare [A] with [val] - Returns 0 (eq), 1 (A>=val), 2 (A<val)
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B09F
+  COMMENT = Check Game State - Returns 1 if [val] = $11C1, 0 otherwise
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B0B0
+  COMMENT = Check Condition - Returns 1 if character [A] has status [val]; Status values: 0=Satisfactory, 1=Deceased, 2=Not Here, etc
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B0E1
+  COMMENT = Compare Condition - Returns 1 if character [A] has condition [X]
+
+ASM_FUNCTION 07B0E8
+  COMMENT = Get ID in slot [val] - Returns the character ID (0-9) in given party slot (0-3)
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B0F1
+  COMMENT = Get character offset
+
+ASM_FUNCTION 07B11C
+  COMMENT = Set Condition
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION 07B169
+  COMMENT = OR element with [var]
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B17F
+  COMMENT = Get Condition-2
+
+ASM_FUNCTION 07B220
+  COMMENT = Sub: Dungeon Check - Returns 1 if in a dungeon, 0 if in a town
+
+ASM_FUNCTION 07B234
+  COMMENT = Sub: Levelup check
+
+ASM_FUNCTION 07B256
+  COMMENT = Sub: Increase LVL
+
+ASM_FUNCTION 07B27A
+  COMMENT = Sub: Get EXP to next LVL
+
+ASM_FUNCTION 07B307
+  COMMENT = Sub: Level join stats
+
+ASM_FUNCTION 07B335
+  COMMENT = Sub: Levelup-2
+
+ASM_FUNCTION 07B410
+  COMMENT = 
+
+ASM_FUNCTION 07B43C
+  COMMENT = Add GP to total won
+
+ASM_FUNCTION 07B44C
+  COMMENT = Add EXP to total won
+
+ASM_FUNCTION 07B470
+  COMMENT = Set character ID
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B4A1
+  COMMENT = Load object var [0-3]
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07B4DC
+  COMMENT = Get PC Name-1
+
+ASM_FUNCTION 07B645
+  COMMENT = Battle: Start reaction
+
+ASM_FUNCTION 07B6F9
+  COMMENT = Battle: Show take that! text
+
+ASM_FUNCTION 07B755
+  COMMENT = Battle: Show ouch! text
+
+ASM_FUNCTION 07B7A6
+  COMMENT = Battle: Show dodge text
+
+ASM_FUNCTION 07B7F2
+  COMMENT = Get enemy names
+
+ASM_FUNCTION 07B8D8
+  COMMENT = Get Area Name
+
+ASM_FUNCTION 07B92F
+  COMMENT = Max heal
+
+ASM_FUNCTION 07B94A
+  COMMENT = Kill spirit (zeroes HP and MP)
+
+ASM_FUNCTION 07B95F
+  COMMENT = Is New Spirit?
+
+ASM_FUNCTION 07B98A
+  COMMENT = Update Spirit HP/MP - Saves "current spirit" stats to that particular spirit's stats (The game tracks them separately)
+
+ASM_FUNCTION 07B9E2
+  COMMENT = Updates a fighter's X and Y pos from a list. Battle related?
+
+ASM_FUNCTION 07BA03
+  COMMENT = Wait for A-press
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07BA4F
+  COMMENT = Some pause status check
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07BA8B
+  COMMENT = Facing related
+
+ASM_FUNCTION 07BA9A
+  COMMENT = Turning around
+
+ASM_FUNCTION 07BAA3
+  COMMENT = Involves the compass subdirection
+
+ASM_FUNCTION 07BAC3
+  COMMENT = Involves the compass subdirection 2
+
+ASM_FUNCTION 07BC0E
+  COMMENT = Remove Status
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07BC42
+  COMMENT = Heal [val] plus variance [0...val]
+  PARAMS  = imm_u16, imm_u8
+
+ASM_FUNCTION 07BDD9
+  COMMENT = Store results in [var] - Saves the object's current [A] ($0CB3,y) in RAM
+  PARAMS  = imm_u16
+
+ASM_FUNCTION 07BDFA
+  COMMENT = Get Honey Name
+
+ASM_FUNCTION 07BF2D
+  COMMENT = Get spell ID - [val]
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 07C8F4
+  COMMENT = Store Bytes at Offset - [RAM addr + [value at RAM addr] ] = [value]
+  PARAMS  = imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION 0E8001
+  COMMENT = RAM Decomp (8009)
+
+ASM_FUNCTION 0E8012
+  COMMENT = RAM Decomp (801A)
+
+ASM_FUNCTION 0E8023
+  COMMENT = RAM Decomp (802B)
+
+ASM_FUNCTION 0E8034
+  COMMENT = RAM Decomp (803C)
+
+ASM_FUNCTION 178001
+  COMMENT = Bank 17 Init
+
+ASM_FUNCTION 178283
+  COMMENT = 
+
+ASM_FUNCTION 178BCF
+  COMMENT = Sub: Intro Weather-1
+
+ASM_FUNCTION 178C6E
+  COMMENT = Sub: Intro Weather-2
+
+ASM_FUNCTION 188001
+  COMMENT = Zero boss array, delete $18E1
+
+ASM_FUNCTION 18800B
+  COMMENT = Check map tile value (Returns 0=no encounter, 1-3=encounter)
+
+ASM_FUNCTION 1880E8
+  COMMENT = Start boss fight
+
+ASM_FUNCTION 18814B
+  COMMENT = Battle: Some Decompression subroutine
+
+ASM_FUNCTION 1881E6
+  COMMENT = Battle: Load Encounter Graphics
+
+ASM_FUNCTION 188210
+  COMMENT = Roll RNG for Random Encounter
+
+ASM_FUNCTION 1882E6
+  COMMENT = Get Attack Animation - Takes in an attack animation 0-7 (Sword, Bite, Splash, Claw, Sting, Punch) (6=??) (7=Damaged Star)
+
+ASM_FUNCTION 188321
+  COMMENT = Zero $18FD. (Why is this a SUBROUTINE it's not that difficult!!!)
+
+ASM_FUNCTION 188416
+  COMMENT = Clear the Treasure Tracker
+
+ASM_FUNCTION 188423
+  COMMENT = Treasure Chest Draw - Sets up a chest object to appear if the coordinates are right
+
+ASM_FUNCTION 188546
+  COMMENT = Treasure Opened?
+
+ASM_FUNCTION 18851A
+  COMMENT = 
+
+ASM_FUNCTION 188A75
+  COMMENT = Turning in town
+
+ASM_FUNCTION 189732
+  COMMENT = Ch01 Town
+
+ASM_FUNCTION 189E36
+  COMMENT = Beat up End Check
+
+ASM_FUNCTION 189E69
+  COMMENT = Ariel/Teefa Attack Text
+
+ASM_FUNCTION 189F30
+  COMMENT = Beaten Up Attack
+
+ASM_FUNCTION 189F7C
+  COMMENT = Color Setup
+
+ASM_FUNCTION 189F90
+  COMMENT = Zero Winmask stuff
+
+ASM_FUNCTION 189F9B
+  COMMENT = Ariel Yes/No Question
+
+ASM_FUNCTION 189D72
+  COMMENT = Related to setting slot 3's position (maybe for Teefa leaving the party in Ch 1?)
+
+ASM_FUNCTION 189DF8
+  COMMENT = 
+
+ASM_FUNCTION 18AA53
+  COMMENT = Set up Reinoll Scene
+
+ASM_FUNCTION 18D4CC
+  COMMENT = Load event text - Reads text opcodes from [addr] to buffer #[var] (0 or 1)
+  PARAMS  = addr_24, imm_u8
+
+ASM_FUNCTION 18D4D2
+  COMMENT = Load event text (no clear) - Reads text opcodes from [addr] to buffer #[var] (0 or 1), does not set $108F Portrait_offset to FFFF
+  PARAMS  = addr_24, imm_u8
+
+ASM_FUNCTION 18D4D9
+  COMMENT = Check party
+
+ASM_FUNCTION 18D4F7
+  COMMENT = Compressed Setup (Loads a pointer to data and calls 188325)
+  PARAMS  = addr_24, imm_u16
+
+ASM_FUNCTION 18D512
+  COMMENT = Make animation loop 2
+
+ASM_FUNCTION 18D51D
+  COMMENT = Set window mask [Main screen][BG 1/2][BG 3/4][OBJ color]
+  PARAMS  = imm_u8, imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION 18D544
+  COMMENT = Clear window mask lo
+
+ASM_FUNCTION 18D54C
+  COMMENT = Set Window 1 [$2126 offset][val]
+  PARAMS  = imm_u8, imm_u16
+
+ASM_FUNCTION 18D6D7
+  COMMENT = Transfer shit
+
+ASM_FUNCTION 18D9F0
+  COMMENT = Get World Map vars
+
+
+
