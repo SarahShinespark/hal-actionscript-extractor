@@ -345,11 +345,17 @@ class Disassembler(object):
                         self.pc = self.rom_file.tell()
                         data_size = DATA_TYPE_SIZES[p]
                         b = self.rom_file.read(data_size)
-                        arg = self.datatype_to_str(p, b)
-                        arg = arg.replace('#', '')
+
+                        # Print the parameter's symbol if it exists; this really eases readability
+                        d = int.from_bytes(b, byteorder='little')
+                        if d in self.symbols:
+                            arg = self.symbols[d]
+                        else:
+                            arg = self.datatype_to_str(p, b)
+                            arg = arg.replace('#', '')
                         extra += (indentation + DIRECTIVES[data_size - 1].ljust(12) + arg).ljust(40 + len(indentation))
                         extra += '; {:06X}/{}\n'.format(self.snes_pc, b.hex().upper())
-                        
+
             else:
 
                 if address not in warning_addresses:
