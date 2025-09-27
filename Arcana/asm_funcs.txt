@@ -103,7 +103,7 @@ ASM_FUNCTION 0088DE
   COMMENT = Wait for Vblank
 
 ASM_FUNCTION 0089F1
-  COMMENT = RNG - Random Number Generator. Returns a number that's modulus of the current accumulator. The full 2 byte RNG is saved to $1E20.
+  COMMENT = RNG - Random Number Generator. Returns a number that's modulus of the current accumulator. The full 2 byte RNG is saved to $1E20 (often called [$20] in the code).
 
 ASM_FUNCTION 008A39
   COMMENT = Multiply to 1E00 - Used for larger multiplication.
@@ -151,31 +151,31 @@ ASM_FUNCTION 009A6C
   COMMENT = Allocate Script Slot
 
 ASM_FUNCTION 009AF0
-  COMMENT = Get ASM code
-  PARAMS  = imm_u8
+  COMMENT = Get ASM code  - Reads the next byte at program counter [$10]
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009AF8
-  COMMENT = Get ASM code
-  PARAMS  = imm_u8
+  COMMENT = Get ASM code  - Reads the next byte at program counter [$10]
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009B00
-  COMMENT = Get ASM code
-  PARAMS  = imm_u16
+  COMMENT = Get ASM code  - Reads the next 2 bytes at program counter [$10]
+  PARAMS  = imm_16
 
 ASM_FUNCTION 009B07
-  COMMENT = Get ASM code
-  PARAMS  = imm_u16
+  COMMENT = Get ASM code  - Reads the next 2 bytes at program counter [$10]
+  PARAMS  = imm_16
 
 ASM_FUNCTION 009B26
   COMMENT = Move Object
 
 ASM_FUNCTION 009C0A
   COMMENT = Sound byte
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009C19
   COMMENT = Sound stuff
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009C3C
   COMMENT = Get/Set Music
@@ -199,26 +199,26 @@ ASM_FUNCTION 009CBC
 
 ASM_FUNCTION 009CC9
   COMMENT = Menu Stuffs
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009CDD
   COMMENT = Battle related
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009CE5
   COMMENT = Unknown setup
 
 ASM_FUNCTION 009CF9
   COMMENT = Decomp80 setup
-  PARAMS  = addr_24
+  PARAMS  = label_24
 
 ASM_FUNCTION 009D07
   COMMENT = 00/8698 setup
-  PARAMS  = addr_24
+  PARAMS  = label_24
 
 ASM_FUNCTION 009D1F
   COMMENT = 00/8698 setup
-  PARAMS  = addr_24, imm_u16
+  PARAMS  = label_24, imm_u16
 
 ASM_FUNCTION 009D34
   COMMENT = Setup: Display stuff
@@ -233,28 +233,28 @@ ASM_FUNCTION 009D69
   PARAMS  = imm_u8
 
 ASM_FUNCTION 009D6F
-  COMMENT = Display brancher
-  PARAMS  = imm_u8, imm_u8, imm_u16, imm_u16
+  COMMENT = Display brancher  - [0-3: Call $822B, 826A, 82A7, 82E6] [A] [X] [Y]
+  PARAMS  = imm_8, imm_8, imm_16, imm_16
 
 ASM_FUNCTION 009D93
-  COMMENT = Set Sprite mode
-  PARAMS  = imm_u8, imm_u16, imm_u8
+  COMMENT = Set Sprite mode  - [A] [X] [OBJ size]
+  PARAMS  = imm_8, imm_16, imm_8
 
 ASM_FUNCTION 009DA8
   COMMENT = Main Screen add
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009DB6
   COMMENT = Main Screen remove
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009DC6
   COMMENT = Sub Screen add
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009DD7
   COMMENT = Sub Screen remove
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009DEA
   COMMENT = Some subroutine at 0189AF
@@ -282,15 +282,15 @@ ASM_FUNCTION 009E62
 
 ASM_FUNCTION 009E79
   COMMENT = Mosaic BG Enable
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009E8A
   COMMENT = Mosaic Clear
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009E9D
   COMMENT = Set Mosaic Size
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009EB8
   COMMENT = Increase Mosaic Size
@@ -299,12 +299,12 @@ ASM_FUNCTION 009ECC
   COMMENT = Decrease Mosaic Size
 
 ASM_FUNCTION 009EE0
-  COMMENT = HDMA transfer
-  PARAMS  = imm_u8, imm_u8, imm_u8, addr_24
+  COMMENT = HDMA transfer  - [0-7 = HDMA channel] [transfer pattern - (0 = 1b) (1-2 = 2b) (3-4 = 4b)], [PPU register $21xx] [Read/write address]
+  PARAMS  = imm_8, imm_8, imm_8, label_24
 
 ASM_FUNCTION 009F1F
   COMMENT = Remove HDMA channel
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009F31
   COMMENT = HDMA disable
@@ -314,68 +314,68 @@ ASM_FUNCTION 009F35
 
 ASM_FUNCTION 009F3C
   COMMENT = Color Add Select
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 009F4F
   COMMENT = Color Math Designation
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 009F70
   COMMENT = Set CGADSUB
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 009F70
   COMMENT = Set RGB
-  PARAMS  = imm_u8, imm_u8, imm_u8
+  PARAMS  = imm_8, imm_8, imm_8
 
 ASM_FUNCTION 009FA1
   COMMENT = Set color planes
 
 ASM_FUNCTION 009F83
-  COMMENT = Set RGB
-  PARAMS  = imm_u8, imm_u8, imm_u8
+  COMMENT = Set RGB -2
+  PARAMS  = imm_8, imm_8, imm_8
 
 ASM_FUNCTION 009FA1
   COMMENT = Set color plane intensity 
 
 ASM_FUNCTION 009FE2
   COMMENT = Add RGB
-  PARAMS  = imm_u8, imm_u8, imm_u8
+  PARAMS  = imm_8, imm_8, imm_8
 
 ASM_FUNCTION 00A00F
-  COMMENT = Was Button Pressed?
-  PARAMS  = imm_u16
+  COMMENT = Was Button Pressed? - Checks $31 to see if [val] buttons were pressed, returns nonzero if true. Bit order: (BYsS ^v<>)(AXLR____) i.e. 8000 = B button, 4000 = Y button, 0300 = Left+Right button, 0080 = A button
+  PARAMS  = imm_16
 
 ASM_FUNCTION 00A022
-  COMMENT = Was Button Pressed? 2
-  PARAMS  = imm_u16
+  COMMENT = Was Button Pressed? 2 - Checks $21 to see if [val] buttons were pressed, returns nonzero if true. Bit order: (BYsS ^v<>)(AXLR____) i.e. 8000 = B button, 4000 = Y button, 0300 = Left+Right button, 0080 = A button
+  PARAMS  = imm_16
 
 ASM_FUNCTION 00A035
   COMMENT = Decompression setup 2
-  PARAMS  = addr_24, addr_24
+  PARAMS  = label_24, label_24
 
 ASM_FUNCTION 00A051
   COMMENT = Loop til (RAM) is (val)
-  PARAMS  = imm_u16, imm_u16
+  PARAMS  = label_16, imm_u16
 
 ASM_FUNCTION 00A06F
   COMMENT = (RAM) minus (val)
-  PARAMS  = imm_u16, imm_u16
+  PARAMS  = label_16, imm_u16
 
 ASM_FUNCTION 00A07B
   COMMENT = Unknown
   PARAMS  = imm_u16
 
 ASM_FUNCTION 00A097
-  COMMENT = Text Init
-  PARAMS  = addr_24, imm_u8
+  COMMENT = Text Init  - [Location of 5b temp text values], [0-1: $109B or $109B+28 - which text array to use]
+  PARAMS  = label_24, imm_u8
 
 ASM_FUNCTION 00A0A8
   COMMENT = Do Stuff
 
 ASM_FUNCTION 00A0AC
-  COMMENT = Setup Text Parser
-  PARAMS  = addr_24, imm_u8
+  COMMENT = Setup Text Parser - [3 bytes] Address to read text from, [val= 0 or 1] text buffer to write to
+  PARAMS  = label_24, imm_8
 
 ASM_FUNCTION 00A0BD
   COMMENT = RNG = Random Number Generator
@@ -383,7 +383,7 @@ ASM_FUNCTION 00A0BD
 
 ASM_FUNCTION 00A0C4
   COMMENT = Update screen
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 00A0CB
   COMMENT = Unfade (Increase lighting by 1/16)
@@ -392,16 +392,16 @@ ASM_FUNCTION 00A0DB
   COMMENT = Fade (Decrease lighting by 1/16)
 
 ASM_FUNCTION 00A105
-  COMMENT = Gfx: Get Palette 2
-  PARAMS  = addr_24, imm_u8, imm_u16
+  COMMENT = Gfx: Get Palette 2  - Prereq: Uses an offset [0-3] from var2 to change the destination address. [Source addr] [Destination RAM ($0420 + 2* ([val] + [$40 | $70 | $50 | $60])] [# bytes to transfer]
+  PARAMS  = label_24, imm_8, imm_u16
 
 ASM_FUNCTION 00A140
-  COMMENT = Gfx: Get Palette
-  PARAMS  = addr_24, imm_u8, imm_u16
+  COMMENT = Gfx: Get Palette  - [Source addr] [Destination RAM ($0420 + 2*[val])] [# bytes to transfer]
+  PARAMS  = label_24, imm_8, imm_u16
 
 ASM_FUNCTION 00A162
-  COMMENT = Confusing RAM transfer
-  PARAMS  = addr_24, imm_u8, imm_u8, imm_u8, imm_u8
+  COMMENT = Confusing RAM transfer  - [Source], [Destination ($420+2*[val])], [Size], [Comparison value], [0-3: Load from var0 | var1 | var2 | var3]
+  PARAMS  = label_24, imm_u8, imm_u8, imm_u8, imm_u8
 
 ASM_FUNCTION 00A45E
   COMMENT = Sub: Event ID handling
@@ -632,37 +632,38 @@ ASM_FUNCTION 03DA71
 
 ASM_FUNCTION 03E2A8
   COMMENT = Shop cursor setup
-  PARAMS  = addr_24
+  PARAMS  = label_24
 
 ASM_FUNCTION 03E4F8
   COMMENT = Store [RAM] into [RAM]
-  PARAMS  = imm_u16, imm_u16
+  PARAMS  = label_16, label_16
 
 ASM_FUNCTION 03E509
   COMMENT = Set Cursors
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 03E523
   COMMENT = Involves the 063x vars (sprite data)
-  PARAMS  = imm_u16, imm_u16
+  PARAMS  = imm_16, imm_16
 
 ASM_FUNCTION 03E562
   COMMENT = Color stuff
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 03E57D
   COMMENT = Adjust color math
+  PARAMS  = imm_16
 
 ASM_FUNCTION 03E595
   COMMENT = $1893 = 0, $2131 color math = E000
 
 ASM_FUNCTION 03E59F
   COMMENT = Subtract color math designation
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 03E5BB
   COMMENT = Add color math designation
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 03EAFD
   COMMENT = Map Drawing
@@ -675,7 +676,7 @@ ASM_FUNCTION 078014
 
 ASM_FUNCTION 078043
   COMMENT = Get Spell List [char ID]
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 0781BB
   COMMENT = Condition related
@@ -904,7 +905,7 @@ ASM_FUNCTION 07A672
   COMMENT = Status screen prep (Stores the stats in temp variables to be drawn to the screen)
 
 ASM_FUNCTION 07A816
-  COMMENT = Compare floor tile (returns true if [val] matches tile you're standing on
+  COMMENT = Compare floor tile (returns true if [val] matches tile you're standing on)
   PARAMS  = imm_u16
 
 ASM_FUNCTION 07A827
@@ -1002,29 +1003,29 @@ ASM_FUNCTION 07B081
 
 ASM_FUNCTION 07B09F
   COMMENT = Check Game State - Returns 1 if [val] = $11C1, 0 otherwise
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 07B0B0
   COMMENT = Check Condition - Returns 1 if character [A] has status [val]; Status values: 0=Satisfactory, 1=Deceased, 2=Not Here, etc
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 07B0E1
   COMMENT = Compare Condition - Returns 1 if character [A] has condition [X]
 
 ASM_FUNCTION 07B0E8
   COMMENT = Get ID in slot [val] - Returns the character ID (0-9) in given party slot (0-3)
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 07B0F1
   COMMENT = Get character offset
 
 ASM_FUNCTION 07B11C
   COMMENT = Set Condition
-  PARAMS  = imm_u16, imm_u16
+  PARAMS  = imm_16, imm_16
 
 ASM_FUNCTION 07B169
   COMMENT = OR element with [var]
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 07B17F
   COMMENT = Get Condition-2
@@ -1058,11 +1059,11 @@ ASM_FUNCTION 07B44C
 
 ASM_FUNCTION 07B470
   COMMENT = Set character ID
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 07B4A1
   COMMENT = Load object var [0-3]
-  PARAMS  = imm_u16
+  PARAMS  = imm_16
 
 ASM_FUNCTION 07B4DC
   COMMENT = Get PC Name-1
@@ -1102,11 +1103,11 @@ ASM_FUNCTION 07B9E2
 
 ASM_FUNCTION 07BA03
   COMMENT = Wait for A-press
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 07BA4F
   COMMENT = Some pause status check
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 07BA8B
   COMMENT = Facing related
@@ -1122,7 +1123,7 @@ ASM_FUNCTION 07BAC3
 
 ASM_FUNCTION 07BC0E
   COMMENT = Remove Status
-  PARAMS  = imm_u8
+  PARAMS  = imm_8
 
 ASM_FUNCTION 07BC42
   COMMENT = Heal [val] plus variance [0...val]
@@ -1130,7 +1131,7 @@ ASM_FUNCTION 07BC42
 
 ASM_FUNCTION 07BDD9
   COMMENT = Store results in [var] - Saves the object's current [A] ($0CB3,y) in RAM
-  PARAMS  = imm_u16
+  PARAMS  = label_16
 
 ASM_FUNCTION 07BDFA
   COMMENT = Get Honey Name
@@ -1141,7 +1142,7 @@ ASM_FUNCTION 07BF2D
 
 ASM_FUNCTION 07C8F4
   COMMENT = Store Bytes at Offset - [RAM addr + [value at RAM addr] ] = [value]
-  PARAMS  = imm_u16, imm_u16, imm_u16
+  PARAMS  = label_16, imm_u16, imm_u16
 
 ASM_FUNCTION 0E8001
   COMMENT = RAM Decomp (8009)
@@ -1238,32 +1239,32 @@ ASM_FUNCTION 18AA53
 
 ASM_FUNCTION 18D4CC
   COMMENT = Load event text - Reads text opcodes from [addr] to buffer #[var] (0 or 1)
-  PARAMS  = addr_24, imm_u8
+  PARAMS  = label_24, imm_8
 
 ASM_FUNCTION 18D4D2
   COMMENT = Load event text (no clear) - Reads text opcodes from [addr] to buffer #[var] (0 or 1), does not set $108F Portrait_offset to FFFF
-  PARAMS  = addr_24, imm_u8
+  PARAMS  = label_24, imm_8
 
 ASM_FUNCTION 18D4D9
   COMMENT = Check party
 
 ASM_FUNCTION 18D4F7
   COMMENT = Compressed Setup (Loads a pointer to data and calls 188325)
-  PARAMS  = addr_24, imm_u16
+  PARAMS  = label_24, imm_u16
 
 ASM_FUNCTION 18D512
   COMMENT = Make animation loop 2
 
 ASM_FUNCTION 18D51D
   COMMENT = Set window mask [Main screen][BG 1/2][BG 3/4][OBJ color]
-  PARAMS  = imm_u8, imm_u8, imm_u8, imm_u8
+  PARAMS  = imm_8, imm_8, imm_8, imm_8
 
 ASM_FUNCTION 18D544
   COMMENT = Clear window mask lo
 
 ASM_FUNCTION 18D54C
   COMMENT = Set Window 1 [$2126 offset][val]
-  PARAMS  = imm_u8, imm_u16
+  PARAMS  = imm_u8, imm_16
 
 ASM_FUNCTION 18D6D7
   COMMENT = Transfer shit

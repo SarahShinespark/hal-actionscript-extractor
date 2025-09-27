@@ -113,71 +113,71 @@ DATA_TYPE_SIZES = {
 
 # (mnemonic, data types separated by spaces)
 OPCODES = (
-    ('END',         ''),
-    ('START_LOOP',  'imm_u8'),
-    ('END_LOOP',    ''),
-    ('JML',         'label_24'),
-    ('JSL',         'label_24'),
-    ('RTL',         ''),
-    ('WAIT',        'imm_u8'),
-    ('ASM_CALL',    'addr_24'),
-    ('TASK',        'label_16'),
-    ('ON_TICK',     'addr_24'),
-    ('HALT',        ''),
-    ('JEQ',         'label_16'),
-    ('JNE',         'label_16'),
-    ('END_TASK',    ''),
-    ('BIN_OP.w',    'addr_16 imm_u8 imm_16'),  # BINOP with 16-bit memory value
-    ('MOV',         'obj_var imm_16'),         # Store 16b value in obj_var
-    ('ONTICK',      'nop'),
-    ('MULTI_JMP',   'imm_u8'),                 # Jumps to a variable list of pointers
-    ('MULTI_JSR',   'imm_u8'),
-    ('MOV.b',       'addr_16 imm_8'),          # Store 8b value in obj_var
-    ('UNK_TASK',    'imm_s8'),
-    ('BINOP',       'obj_var imm_u8 imm_16'),  # BINOP with object variable
-    ('MOV.w',       'addr_16 imm_16'),         # Store 16b value to memory
-    ('BREAK_EQ',    'label_16'),               # JEQ and break out of loop
-    ('BREAK_NE',    'label_16'),
-    ('BIN_OP.b',    'addr_16 imm_u8 imm_8'),   # BINOP with 8-bit memory value
-    ('JMP',         'label_16'),
-    ('JSR',         'label_16'),
-    ('RTS',         ''),
-    ('SET_ANIM_PTR','addr_24'),                # Saves animation data ptr to object's $0A9F
-    ('MOV',         'reg imm_16'),             # Load 16b value
-    ('MOV',         'reg addr_16'),            # Load 16b memory
-    ('WEIRD_1'      'imm_8'),        # Involves applying position/velocity changes
-    ('WEIRD_2',     'imm_8'),        # Nonexistant instruction in Earthbound
-    ('WEIRD_3',     'imm_8'),        # Nonexistant instruction in Earthbound
-    ('MOV',         'obj_var reg'),            # STA obj_var
-    ('MOV',         'reg obj_var'),            # LDA obj_var
-    ('WAIT',        'obj_var'),                # Waits [obj_var] frames (text speed)
+    ('END',         ''),                        # 00
+    ('START_LOOP',  'imm_u8'),                  # 01
+    ('END_LOOP',    ''),                        # 02
+    ('JML',         'label_24'),                # 03
+    ('JSL',         'label_24'),                # 04
+    ('RTL',         ''),                        # 05
+    ('WAIT',        'imm_u8'),                  # 06
+    ('ASM_CALL',    'label_24'),                # 07
+    ('TASK',        'label_16'),                # 08
+    ('ON_TICK',     'label_24'),                # 09
+    ('HALT',        ''),                        # 0A
+    ('JEQ',         'label_16'),                # 0B
+    ('JNE',         'label_16'),                # 0C
+    ('END_TASK',    ''),                        # 0D
+    ('BIN_OP.w',    'label_16 imm_u8 imm_16'),  # 0E - BINOP with 16-bit memory value
+    ('MOV',         'obj_var imm_16'),          # 0F - Store 16b value in obj_var
+    ('ONTICK',      'nop'),                     # 10
+    ('MULTI_JMP',   'imm_u8'),                  # 11 - Jumps to a variable list of pointers
+    ('MULTI_JSR',   'imm_u8'),                  # 12 - Subroutine to a variable list of pointers
+    ('MOV.b',       'addr_16 imm_8'),           # 13 - Store 8b value in obj_var
+    ('UNK_TASK',    'imm_s8'),                  # 14
+    ('BIN_OP',      'obj_var imm_u8 imm_16'),   # 15 - BINOP with object variable
+    ('MOV.w',       'label_16 imm_16'),         # 16 - Store 16bit value to memory
+    ('BREAK_EQ',    'label_16'),                # 17 - JEQ and break out of loop
+    ('BREAK_NE',    'label_16'),                # 18
+    ('BIN_OP.b',    'label_16 imm_u8 imm_8'),   # 19 - BINOP with 8-bit memory value
+    ('JMP',         'label_16'),                # 1A
+    ('JSR',         'label_16'),                # 1B
+    ('RTS',         ''),                        # 1C
+    ('SET_ANIM_PTR','label_24'),                # 1D - Saves animation data ptr to object's $0A9F
+    ('MOV',         'reg imm_16'),              # 1E - Load 16bit value
+    ('MOV',         'reg label_16'),            # 1F - Load 16bit memory
+    ('WEIRD_1'      'imm_8'),                   # 20 - Involves applying position/velocity changes
+    ('WEIRD_2',     'imm_8'),                   # 21 - Nonexistant instruction in Earthbound
+    ('WEIRD_3',     'imm_8'),                   # 22 - Nonexistant instruction in Earthbound
+    ('MOV',         'obj_var reg'),             # 23 - STA obj_var [0-3]
+    ('MOV',         'reg obj_var'),             # 24 - LDA obj_var [0-3]
+    ('WAIT',        'obj_var'),                 # 25 - Waits [obj_var 0-3's value] frames (text speed)
     # SPECIAL INSTRUCTIONS BEGIN
-    ('SET_ANIM',    'imm_s8'),
-    ('SET_XPOS',    'imm_16'),
-    ('SET_YPOS',    'imm_16'),
-    ('ADD_XPOS',    'imm_s16'),
-    ('ADD_YPOS',    'imm_s16'),
-    ('SET_XVEL',    'imm_16'),
-    ('SET_YVEL',    'imm_16'),
-    ('ADD_XVEL',    'imm_16'),
-    ('ADD_YVEL',    'imm_16'),
-    ('BGH_DISP',    'imm_u8 imm_16'),  # Set background horizontal displacement          (Earthbound: UNK31)
-    ('BGV_DISP',    'imm_u8 imm_16'),  # Set background vertical displacement            (Earthbound: UNK32)
-    ('SET_BGH_VEL', 'imm_u8 imm_16'),  # Set background horizontal displacement velocity (Earthbound: UNK33)
-    ('SET_BGV_VEL', 'imm_u8 imm_16'),  # Set background vertical displacement velocity   (Earthbound: UNK34)
-    ('ADD_BGH_VEL', 'imm_u8 imm_16'),  # Add background horizontal displacement velocity
-    ('ADD_BGV_VEL', 'imm_u8 imm_16'),  # Add background vertical displacement velocity
-    ('INC_ANIM',    ''),
-    ('DEC_ANIM',    ''),
-    ('ADD_ANIM',    'imm_s8'),
-    ('UNK_37',      'imm_8 imm_16'),   # SUM_1
-    ('UNK_38',      'imm_8 imm_16'),   # SUM_2
-    ('ZERO_VEL',     ''),
-    ('ZR_BG_DISPVEL','imm_8'),         # Zero background displacement velocity (Earthbound: UNK3A)
-    ('SET_ZPOS',    'imm_16'),
-    ('ADD_ZPOS',    'imm_s16'),
-    ('SET_ZVEL',    'imm_16'),
-    ('ADD_ZVEL',    'imm_16'),
+    ('SET_ANIM',    'imm_s8'),                  # 30
+    ('SET_XPOS',    'imm_s16'),                 # 38
+    ('SET_YPOS',    'imm_s16'),                 # 40
+    ('ADD_XPOS',    'imm_s16'),                 # 48
+    ('ADD_YPOS',    'imm_s16'),                 # 50
+    ('SET_XVEL',    'imm_s16'),                 # 58
+    ('SET_YVEL',    'imm_s16'),                 # 60
+    ('ADD_XVEL',    'imm_s16'),                 # 68
+    ('ADD_YVEL',    'imm_s16'),                 # 70
+    ('BGH_DISP',    'imm_u8 imm_16'),           # 78 - Set background horizontal displacement          (Earthbound: UNK31)
+    ('BGV_DISP',    'imm_u8 imm_16'),           # 80 - Set background vertical displacement            (Earthbound: UNK32)
+    ('SET_BGH_VEL', 'imm_u8 imm_16'),           # 88 - Set background horizontal displacement velocity (Earthbound: UNK33)
+    ('SET_BGV_VEL', 'imm_u8 imm_16'),           # 90 - Set background vertical displacement velocity   (Earthbound: UNK34)
+    ('ADD_BGH_VEL', 'imm_u8 imm_16'),           # 98 - Add background horizontal displacement velocity
+    ('ADD_BGV_VEL', 'imm_u8 imm_16'),           # A0 - Add background vertical displacement velocity
+    ('INC_ANIM',    ''),                        # A8
+    ('DEC_ANIM',    ''),                        # B0
+    ('ADD_ANIM',    'imm_s8'),                  # B8
+    ('UNK_37',      'imm_8 imm_16'),            # C0 - SUM_1
+    ('UNK_38',      'imm_8 imm_16'),            # C8 - SUM_2
+    ('ZERO_VEL',     ''),                       # D0
+    ('ZR_BG_DISPVEL','imm_8'),                  # D8 - Zero background displacement velocity (Earthbound: UNK3A)
+    ('SET_ZPOS',    'imm_s16'),                 # E0
+    ('ADD_ZPOS',    'imm_s16'),                 # E8
+    ('SET_ZVEL',    'imm_s16'),                 # F0
+    ('ADD_ZVEL',    'imm_s16'),                 # F8
 )
 
 BINOPS = ('AND', 'OR', 'ADD', 'XOR')
@@ -216,7 +216,10 @@ class Disassembler(object):
     def datatype_to_str(self, data_type, bytes_):
         value = int.from_bytes(bytes_, byteorder='little')
         if data_type == 'label_16':
-            bank_mask = self.snes_pc & 0xFF0000
+            if value < 0x8000:
+                bank_mask = 0
+            else:
+                bank_mask = self.snes_pc & 0xFF0000
             return self.symbols.get(bank_mask | value, '${:04X}'.format(value))
         elif data_type == 'label_24':
             return self.symbols.get(value, '${:06X}'.format(value))
@@ -347,12 +350,12 @@ class Disassembler(object):
                         b = self.rom_file.read(data_size)
 
                         # Print the parameter's symbol if it exists; this really eases readability
-                        d = int.from_bytes(b, byteorder='little')
-                        if d in self.symbols:
-                            arg = self.symbols[d]
-                        else:
-                            arg = self.datatype_to_str(p, b)
-                            arg = arg.replace('#', '')
+#                        d = int.from_bytes(b, byteorder='little')
+#                        if d in self.symbols:
+#                            arg = self.symbols[d]
+#                        else:
+                        arg = self.datatype_to_str(p, b)
+                        arg = arg.replace('#', '')
                         extra += (indentation + DIRECTIVES[data_size - 1].ljust(12) + arg).ljust(40 + len(indentation))
                         extra += '; {:06X}/{}\n'.format(self.snes_pc, b.hex().upper())
 
@@ -360,7 +363,7 @@ class Disassembler(object):
 
                 if address not in warning_addresses:
                     print('AT {:06X} -'.format(self.snes_pc), "WARNING: IDK ANYTHING ABOUT ASM FUNCTION {:06X}".format(address))
-#                    warning_addresses.append(address)
+                    warning_addresses.append(address)
 
 
         elif opcode in (0x0E, 0x15, 0x19):  # BINOP
@@ -369,10 +372,9 @@ class Disassembler(object):
                 op = bytes_[2]
             else:
                 op = bytes_[3]
-
             if op in (0, 1, 2, 3):
-                del operands[1]
-                mnemonic = mnemonic.replace('BINOP', BINOPS[op])
+                operands[1] = BINOPS[op]
+                mnemonic = mnemonic.replace('BIN_OP', BINOPS[op])
                 
                 if op == 2:  # ADD, change operand type from HEXADECIMAL immediate to DECIMAL immediate
                     data_type = 'imm_s8' if opcode == 0x19 else 'imm_s16'
@@ -381,7 +383,7 @@ class Disassembler(object):
                     operands[-1] = self.datatype_to_str(data_type, self.rom_file.read(size))
         elif opcode in (0x11, 0x12):  # MULTIJMP, MULTIJSR
             count = bytes_[1]
-
+                
             for i in range(count):
                 self.pc = self.rom_file.tell()
                 b = self.rom_file.read(2)
