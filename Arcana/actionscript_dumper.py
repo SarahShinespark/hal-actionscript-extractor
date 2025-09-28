@@ -32,7 +32,7 @@ SCRIPT_BLOCKS = (  # Why the hell are these PC ADDRESSES AND NOT SNES ADDRESSES 
     (to_pc_addr(0x00D0A9), to_pc_addr(0x00D0CF)),   # I don't know
     (to_pc_addr(0x00D375), to_pc_addr(0x00D40E)),   # Sound test
     (to_pc_addr(0x018321), to_pc_addr(0x018A24)),   #Event 00: Game Init
-    (to_pc_addr(0x018A68), to_pc_addr(0x018B75)),   #Event 01
+    (to_pc_addr(0x018A68), to_pc_addr(0x018B75)),   #Event 01: Moving Around
     (to_pc_addr(0x018C85), to_pc_addr(0x019BD7)),   # Dungeon walking
     (to_pc_addr(0x019BE5), to_pc_addr(0x01A1A2)),   # Map menu
     (to_pc_addr(0x01A32F), to_pc_addr(0x01A39E)),   #Event 02
@@ -91,6 +91,16 @@ SCRIPT_BLOCKS = (  # Why the hell are these PC ADDRESSES AND NOT SNES ADDRESSES 
     (to_pc_addr(0x18A430), to_pc_addr(0x18A4AE)),   #STORY 07: Ch02 Darwin leaves
     (to_pc_addr(0x18A4C3), to_pc_addr(0x18A82B)),   #STORY 08: Ch02 Reinoll visit
     (to_pc_addr(0x18AA07), to_pc_addr(0x18AA52)),   # Ch02 Reinoll animations
+    (to_pc_addr(0x18AA80), to_pc_addr(0x18AB7F)),   #STORY 09: Ch03 Axs's house
+    (to_pc_addr(0x18ABA0), to_pc_addr(0x18ABBC)),   # Ch03 Axs's house (animation)
+    (to_pc_addr(0x18ABD9), to_pc_addr(0x18AC86)),   #STORY 0A: Ch03 Axs is stoned
+    (to_pc_addr(0x18ACFF), to_pc_addr(0x18AD01)),   # Ch03 Axs stone animation
+    (to_pc_addr(0x18AD16), to_pc_addr(0x18AD44)),   #STORY 0B: Ch03 Getting Marid
+    (to_pc_addr(0x18AD51), to_pc_addr(0x18AFEB)),   #STORY 0C: Ch03 The Lava Room
+    (to_pc_addr(0x18B142), to_pc_addr(0x18B19D)),   # Ch03 Lava Subroutine 1
+    (to_pc_addr(0x18B1F6), to_pc_addr(0x18B247)),   # Ch03 Lava Subroutine 2-8
+    (to_pc_addr(0x18D283), to_pc_addr(0x18D4CB)),   # Join/Leave Subroutines, Event Battles
+    (to_pc_addr(0x18D55F), to_pc_addr(0x18D665)),   # Travelling subroutine
     (to_pc_addr(0x18D9D9), to_pc_addr(0x18D9EF))    #Event 17: Overworld
 )
 
@@ -132,7 +142,7 @@ OPCODES = (
     ('ONTICK',      'nop'),                     # 10
     ('MULTI_JMP',   'imm_u8'),                  # 11 - Jumps to a variable list of pointers
     ('MULTI_JSR',   'imm_u8'),                  # 12 - Subroutine to a variable list of pointers
-    ('MOV.b',       'addr_16 imm_8'),           # 13 - Store 8b value in obj_var
+    ('MOV.b',       'label_16 imm_8'),          # 13 - Store 8bit value to memory
     ('UNK_TASK',    'imm_s8'),                  # 14
     ('BIN_OP',      'obj_var imm_u8 imm_16'),   # 15 - BINOP with object variable
     ('MOV.w',       'label_16 imm_16'),         # 16 - Store 16bit value to memory
@@ -142,12 +152,12 @@ OPCODES = (
     ('JMP',         'label_16'),                # 1A
     ('JSR',         'label_16'),                # 1B
     ('RTS',         ''),                        # 1C
-    ('SET_ANIM_PTR','label_24'),                # 1D - Saves animation data ptr to object's $0A9F
+    ('SET_ANIMPTR', 'label_24'),                # 1D - Saves animation data ptr to object's $0A9F
     ('MOV',         'reg imm_16'),              # 1E - Load 16bit value
     ('MOV',         'reg label_16'),            # 1F - Load 16bit memory
-    ('WEIRD_1'      'imm_8'),                   # 20 - Involves applying position/velocity changes
-    ('WEIRD_2',     'imm_8'),                   # 21 - Nonexistant instruction in Earthbound
-    ('WEIRD_3',     'imm_8'),                   # 22 - Nonexistant instruction in Earthbound
+    ('ANIM_1'       ''),                        # 20 - Involves applying position/velocity changes
+    ('ANIM_2',      'imm_8'),                   # 21 - Similar to 20
+    ('ANIM_3',      ''),                        # 22 - Similar to 20
     ('MOV',         'obj_var reg'),             # 23 - STA obj_var [0-3]
     ('MOV',         'reg obj_var'),             # 24 - LDA obj_var [0-3]
     ('WAIT',        'obj_var'),                 # 25 - Waits [obj_var 0-3's value] frames (text speed)
@@ -172,8 +182,8 @@ OPCODES = (
     ('ADD_ANIM',    'imm_s8'),                  # B8
     ('UNK_37',      'imm_8 imm_16'),            # C0 - SUM_1
     ('UNK_38',      'imm_8 imm_16'),            # C8 - SUM_2
-    ('ZERO_VEL',     ''),                       # D0
-    ('ZR_BG_DISPVEL','imm_8'),                  # D8 - Zero background displacement velocity (Earthbound: UNK3A)
+    ('ZERO_VEL',    ''),                        # D0
+    ('ZERO_BG_VEL', 'imm_8'),                   # D8 - Zero background displacement velocity (Earthbound: UNK3A)
     ('SET_ZPOS',    'imm_s16'),                 # E0
     ('ADD_ZPOS',    'imm_s16'),                 # E8
     ('SET_ZVEL',    'imm_s16'),                 # F0
@@ -279,6 +289,8 @@ class Disassembler(object):
                 self.disasm_opcode(opcode)
                 self.force_label = opcode in (0x00, 0x03, 0x05, 0x0A, 0x0E, 0x1A, 0x1C)
                 self.pc = self.rom_file.tell()
+            self.out_file.write('\n' + '='*90 + '\n')
+            
         #Sort the list of warnings after disassemble all
 #        if warning_addresses:
 #            warning_addresses.sort()
