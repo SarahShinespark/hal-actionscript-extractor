@@ -218,7 +218,7 @@ ASM_FUNCTION 009D07
 
 ASM_FUNCTION 009D1F
   COMMENT = 00/8698 setup
-  PARAMS  = label_24, imm_u16
+  PARAMS  = label_24, imm_16
 
 ASM_FUNCTION 009D34
   COMMENT = Setup: Display stuff
@@ -626,13 +626,89 @@ ASM_FUNCTION 03B379
 ASM_FUNCTION 03B3FD
   COMMENT = More Town Loading
 
+ASM_FUNCTION 03B6BC
+  COMMENT = 
+
+ASM_FUNCTION 03B6FE
+  COMMENT = Town Turning-1
+
+ASM_FUNCTION 03BA79
+  COMMENT = Check some events
+
+ASM_FUNCTION 03BB28
+  COMMENT = Is Salah recovered?
+
+ASM_FUNCTION 03CFF4
+  COMMENT = Is Pause_status odd? (Returns based on $1095)
+
+ASM_FUNCTION 03D000
+  COMMENT = Sets Pause_status ($1095) AND 2
+
+ASM_FUNCTION 03D014
+  COMMENT = A or B pressed this frame
+
+ASM_FUNCTION 03D01B
+  COMMENT = Town: Facing Exit? (Returns 1 if $1881 = -32768)
+
+ASM_FUNCTION 03D025
+  COMMENT = Town: Icorina Setup
+
+ASM_FUNCTION 03D03D
+  COMMENT = Zero Main screen winmask
+
+ASM_FUNCTION 03D045
+  COMMENT = Involves the event house, plays The Legend bgm
+
+ASM_FUNCTION 03D207
+  COMMENT = Load shop music
+
 ASM_FUNCTION 03DA71
   COMMENT = Shop related
   PARAMS  = imm_u16
 
+ASM_FUNCTION 03DDEB
+  COMMENT = Get inn price - Loads price based on current area $1573
+
+ASM_FUNCTION 03DE05
+  COMMENT = Can't buy thing - Returns 1 (not enough money) or 0 (otherwise)
+
+ASM_FUNCTION 03DE16
+  COMMENT = Inn: Full heal - Inns remove Paralyzed, Petrified, Confused, Sleeping status but not Deceased or Not Here status
+
+ASM_FUNCTION 03DE6E
+  COMMENT = Alchemist convo picker - Decides which convos to load based on story progress
+
+ASM_FUNCTION 03DF0D
+  COMMENT = Alchemist buy food/drink - returns 0-3 if bought, or 4 if not enough money
+
+ASM_FUNCTION 03DF2F
+  COMMENT = Alchemist healing - [0 = Elixir, 1 = Food A, 2 = Food B]
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 03DFD9
+  COMMENT = Involves shops and clearing an input
+
+ASM_FUNCTION 03E0D0
+  COMMENT = Heal Spirits
+
+ASM_FUNCTION 03E15E
+  COMMENT = Involves clearing an event -1
+
+ASM_FUNCTION 03E18B
+  COMMENT = Involves clearing an event -2
+
+ASM_FUNCTION 03E1C3
+  COMMENT = Buy Revival - Returns 1 (not enough money), or 0 (otherwise)
+
+ASM_FUNCTION 03E1D7
+  COMMENT = Some purchase helper
+
 ASM_FUNCTION 03E2A8
   COMMENT = Shop cursor setup
   PARAMS  = label_24
+
+ASM_FUNCTION 03E317
+  COMMENT = Shop input checker - Returns button pressed (A=1, B=2, )
 
 ASM_FUNCTION 03E4F8
   COMMENT = Store [RAM] into [RAM]
@@ -665,8 +741,50 @@ ASM_FUNCTION 03E5BB
   COMMENT = Add color math designation
   PARAMS  = imm_8
 
+ASM_FUNCTION 03E5D9
+  COMMENT = Lots of Shop_Selection ($1885) - Saves the game??
+
+ASM_FUNCTION 03E63B
+  COMMENT = Get town turn speed?
+
 ASM_FUNCTION 03EAFD
   COMMENT = Map Drawing
+
+ASM_FUNCTION 05F566
+  COMMENT = Spells: Special Cases
+
+ASM_FUNCTION 05F5D2
+  COMMENT = Spells: Move Spell ID to $11B5
+
+ASM_FUNCTION 05F5F2
+  COMMENT = Cards: Get Card Effect
+
+ASM_FUNCTION 05F662
+  COMMENT = Cards: Use Elemental Cards Text
+
+ASM_FUNCTION 05F69A
+  COMMENT = Cards: loading something
+
+ASM_FUNCTION 05F759
+  COMMENT = Cards: Involves an input checker -1
+
+ASM_FUNCTION 05F815
+  COMMENT = Cards: Something about using cards in battle
+
+ASM_FUNCTION 05F845
+  COMMENT = Cards: Related to elemental cards
+
+ASM_FUNCTION 05F870
+  COMMENT = Cards: Involves an input checker -2
+
+ASM_FUNCTION 05F8D6
+  COMMENT = Cards: Check Card Count -1
+
+ASM_FUNCTION 05F907
+  COMMENT = Cards: Involves the inventory
+
+ASM_FUNCTION 05F947
+  COMMENT = Cards: Involves the second card slot
 
 ASM_FUNCTION 078001
   COMMENT = Is Fighting Final Boss? - Returns 1 if true
@@ -1129,6 +1247,10 @@ ASM_FUNCTION 07BC42
   COMMENT = Heal [val] plus variance [0...val]
   PARAMS  = imm_u16, imm_u8
 
+ASM_FUNCTION 07BC9F
+  COMMENT = Use Napping Item [HP up] [MP up] [?] [?] [?]
+  PARAMS  = imm_u16, imm_u16, imm_u8, imm_u8, imm_u8
+
 ASM_FUNCTION 07BDD9
   COMMENT = Store results in [var] - Saves the object's current [A] ($0CB3,y) in RAM
   PARAMS  = label_16
@@ -1157,10 +1279,13 @@ ASM_FUNCTION 0E8034
   COMMENT = RAM Decomp (803C)
 
 ASM_FUNCTION 178001
-  COMMENT = Bank 17 Init
+  COMMENT = Game Start
 
 ASM_FUNCTION 178283
   COMMENT = 
+
+ASM_FUNCTION 17870B
+  COMMENT = Load Intro Text
 
 ASM_FUNCTION 178BCF
   COMMENT = Sub: Intro Weather-1
@@ -1228,6 +1353,9 @@ ASM_FUNCTION 189F90
 ASM_FUNCTION 189F9B
   COMMENT = Ariel Yes/No Question
 
+ASM_FUNCTION 189DB5
+  COMMENT = Finish timer checks - Compares $1091 to two values
+
 ASM_FUNCTION 189D72
   COMMENT = Related to setting slot 3's position (maybe for Teefa leaving the party in Ch 1?)
 
@@ -1237,12 +1365,30 @@ ASM_FUNCTION 189DF8
 ASM_FUNCTION 18AA53
   COMMENT = Set up Reinoll Scene
 
+ASM_FUNCTION 18BFCE
+  COMMENT = Some object variable manipulation
+
+ASM_FUNCTION 18C0BF
+  COMMENT = Random loopvar - Adds [0...45]+15 to an object's wait timer
+
+ASM_FUNCTION 18C1D5
+  COMMENT = Weird RNG rolls - Calls 1d6, 1d6, 1d2 and does object stuff
+
+ASM_FUNCTION 18CE0D
+  COMMENT = Full Heal Rooks/Spirits - Heals the spirits using the current spirit's max HP/MP
+
+ASM_FUNCTION 18CE44
+  COMMENT = Rooks knocked down to 1 HP
+
+ASM_FUNCTION 18D019
+  COMMENT = Epilogue text setup
+
 ASM_FUNCTION 18D4CC
-  COMMENT = Load event text - Reads text opcodes from [addr] to buffer #[var] (0 or 1)
+  COMMENT = Read text opcodes - Reads from [addr] to buffer #[var] (0 or 1)
   PARAMS  = label_24, imm_8
 
 ASM_FUNCTION 18D4D2
-  COMMENT = Load event text (no clear) - Reads text opcodes from [addr] to buffer #[var] (0 or 1), does not set $108F Portrait_offset to FFFF
+  COMMENT = Read text opcodes (no clear) - Reads from [addr] to buffer #[var] (0 or 1), does not set $108F Portrait_offset to FFFF
   PARAMS  = label_24, imm_8
 
 ASM_FUNCTION 18D4D9
@@ -1266,8 +1412,17 @@ ASM_FUNCTION 18D54C
   COMMENT = Set Window 1 [$2126 offset][val]
   PARAMS  = imm_u8, imm_16
 
+ASM_FUNCTION 18D68F
+  COMMENT = Remove Event 17 - Ends overworld travel event
+
+ASM_FUNCTION 18D6A8
+  COMMENT = World Map reposition - moves the map so the characters are centered on it
+
 ASM_FUNCTION 18D6D7
   COMMENT = Transfer shit
+
+ASM_FUNCTION 18D83D
+  COMMENT = Chibi travel load
 
 ASM_FUNCTION 18D9F0
   COMMENT = Get World Map vars

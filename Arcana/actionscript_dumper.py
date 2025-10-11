@@ -27,81 +27,112 @@ LABEL_CHARSET = string.ascii_letters + string.digits + '_'  # Valid characters f
 LAST_SCRIPT = 134  # Amount of scripts
 
 SCRIPT_BLOCKS = (  # Why the hell are these PC ADDRESSES AND NOT SNES ADDRESSES when the symbols and asm_funcs are using SNES format??
-    (to_pc_addr(0x00CEE4), to_pc_addr(0x00CF47)),   # Loading save file
-    (to_pc_addr(0x00CFCF), to_pc_addr(0x00D01C)),   # Stage select stuff
-    (to_pc_addr(0x00D0A9), to_pc_addr(0x00D0CF)),   # I don't know
-    (to_pc_addr(0x00D375), to_pc_addr(0x00D40E)),   # Sound test
-    (to_pc_addr(0x018321), to_pc_addr(0x018A24)),   #Event 00: Game Init
-    (to_pc_addr(0x018A68), to_pc_addr(0x018B75)),   #Event 01: Moving Around
-    (to_pc_addr(0x018C85), to_pc_addr(0x019BD7)),   # Dungeon walking
-    (to_pc_addr(0x019BE5), to_pc_addr(0x01A1A2)),   # Map menu
-    (to_pc_addr(0x01A32F), to_pc_addr(0x01A39E)),   #Event 02
-    (to_pc_addr(0x01A477), to_pc_addr(0x01A4A1)),   #Event 03
-    (to_pc_addr(0x01B807), to_pc_addr(0x01B9B3)),   #Event 6A: Credits scene
-    (to_pc_addr(0x01BADC), to_pc_addr(0x01BB19)),   # Credits stuff
-    (to_pc_addr(0x01BB57), to_pc_addr(0x01BB64)),   # Credits stuff
-    (to_pc_addr(0x01BBC8), to_pc_addr(0x01BC09)),   # Credits stuff
-    (to_pc_addr(0x01BC51), to_pc_addr(0x01BC5E)),   #Event 6B: Staff Roll
-    (to_pc_addr(0x028001), to_pc_addr(0x0280EE)),   #Enemy 00: Slime
-    (to_pc_addr(0x03ADFE), to_pc_addr(0x03AE12)),   #Event 69: Nice
-    (to_pc_addr(0x03B88B), to_pc_addr(0x03BA78)),   # Towns; Movement, Axs house etc
-    (to_pc_addr(0x03BA99), to_pc_addr(0x03BB27)),   # Icorina house
-    (to_pc_addr(0x03BB35), to_pc_addr(0x03CC4A)),   # Event 68: Shop Gfx; Town Shop Handling
-    (to_pc_addr(0x03CDC2), to_pc_addr(0x03CFF3)),   # Field Sprites; Card Sprites
-    (to_pc_addr(0x03D00A), to_pc_addr(0x03D013)),   # Sub: Loop til A or B press
-    (to_pc_addr(0x058001), to_pc_addr(0x0581BE)),   #Event 04: Rooks
-    (to_pc_addr(0x058312), to_pc_addr(0x0587E2)),   #Event 05: Sylph; Load Attribute/Cond. color
-    (to_pc_addr(0x05884E), to_pc_addr(0x058998)),   #Event 06: Dao
-    (to_pc_addr(0x0589EB), to_pc_addr(0x058B35)),   #Event 07: Marid
-    (to_pc_addr(0x058B88), to_pc_addr(0x058CD2)),   #Event 08: Efrite
-    (to_pc_addr(0x058D25), to_pc_addr(0x058E08)),   #Event 09: Teefa
-    (to_pc_addr(0x058E19), to_pc_addr(0x058F08)),   # Teefa part 2
-    (to_pc_addr(0x058F57), to_pc_addr(0x0590BB)),   #Event 0A: Salah
-    (to_pc_addr(0x05910A), to_pc_addr(0x0592C9)),   #Event 0B: Darwin
-    (to_pc_addr(0x059318), to_pc_addr(0x05947C)),   #Event 0C: Axs
-    (to_pc_addr(0x0594CB), to_pc_addr(0x05963F)),   #Event 0D-0F: Skull card;
-    (to_pc_addr(0x059650), to_pc_addr(0x059705)),   # Battle; Damage distortion, status display
-    (to_pc_addr(0x059716), to_pc_addr(0x059B0D)),   # Battle; Battle menu
-    (to_pc_addr(0x059B2E), to_pc_addr(0x059D4A)),   # Battle; Spells, Equipment, Cards, Defend, Run
-    (to_pc_addr(0x05F137), to_pc_addr(0x05F565)),   # Using items and spells
-    (to_pc_addr(0x05F5A7), to_pc_addr(0x05F5D1)),   # Animate enemy attack?
-    (to_pc_addr(0x05F5DF), to_pc_addr(0x05F5F1)),   # Ruinous Mission
-    (to_pc_addr(0x05F95F), to_pc_addr(0x05FA26)),   # Battle; Using Cards
-    (to_pc_addr(0x0F8001), to_pc_addr(0x0F8179)),   #Event 10: Battle Animations
-    (to_pc_addr(0x0FCB2B), to_pc_addr(0x0FCF30)),   #Event 11: Spell Animations
-    (to_pc_addr(0x17804D), to_pc_addr(0x17811A)),   #Event 14: Opening movie
-    (to_pc_addr(0x178BAF), to_pc_addr(0x178BCE)),   # Opening movie graphics loading
-    (to_pc_addr(0x178BEF), to_pc_addr(0x178C6D)),   #Event 15: Intro weather; etc
-    (to_pc_addr(0x18849C), to_pc_addr(0x1884E7)),   #Event 16: Treasure Chests
-    (to_pc_addr(0x1884F2), to_pc_addr(0x1884FB)),   # Some orphaned treasure chest code
-    (to_pc_addr(0x18968B), to_pc_addr(0x1896C9)),   #Event 12: Main Story
-    (to_pc_addr(0x1896CC), to_pc_addr(0x189731)),   #STORY 00: Ch01 Rooks intro
-    (to_pc_addr(0x189795), to_pc_addr(0x189840)),   #STORY 01: Ch01 Ariel/Teefa intro
-    (to_pc_addr(0x189843), to_pc_addr(0x189848)),   #STORY 02: Ch01 Leaving Galia
-    (to_pc_addr(0x18985D), to_pc_addr(0x189B7A)),   #STORY 03: Ch01 Crystal Sword room
-    (to_pc_addr(0x189C4B), to_pc_addr(0x189D71)),   # Ch01 end parts 1, 6
-    (to_pc_addr(0x189D96), to_pc_addr(0x189D84)),   # Ch01 end part 5
-    (to_pc_addr(0x189DC9), to_pc_addr(0x189DF7)),   # Ch01 end part 4
-    (to_pc_addr(0x189E0C), to_pc_addr(0x189E35)),   # Ch01 end parts 2, 3
-    (to_pc_addr(0x18A002), to_pc_addr(0x18A130)),   #STORY 04: Ch02 Salah/Axs intro
-    (to_pc_addr(0x18A189), to_pc_addr(0x18A19A)),   # Ch02 start animations (enter Salah/Axs)
-    (to_pc_addr(0x18A1B7), to_pc_addr(0x18A2AF)),   #STORY 05: Ch02 Darwin intro
-    (to_pc_addr(0x18A2F0), to_pc_addr(0x18A354)),   # Ch02 Darwin animations
-    (to_pc_addr(0x18A369), to_pc_addr(0x18A41B)),   #STORY 06: Ch02 Darwin joins
-    (to_pc_addr(0x18A430), to_pc_addr(0x18A4AE)),   #STORY 07: Ch02 Darwin leaves
-    (to_pc_addr(0x18A4C3), to_pc_addr(0x18A82B)),   #STORY 08: Ch02 Reinoll visit
-    (to_pc_addr(0x18AA07), to_pc_addr(0x18AA52)),   # Ch02 Reinoll animations
-    (to_pc_addr(0x18AA80), to_pc_addr(0x18AB7F)),   #STORY 09: Ch03 Axs's house
-    (to_pc_addr(0x18ABA0), to_pc_addr(0x18ABBC)),   # Ch03 Axs's house (animation)
-    (to_pc_addr(0x18ABD9), to_pc_addr(0x18AC86)),   #STORY 0A: Ch03 Axs is stoned
-    (to_pc_addr(0x18ACFF), to_pc_addr(0x18AD01)),   # Ch03 Axs stone animation
-    (to_pc_addr(0x18AD16), to_pc_addr(0x18AD44)),   #STORY 0B: Ch03 Getting Marid
-    (to_pc_addr(0x18AD51), to_pc_addr(0x18AFEB)),   #STORY 0C: Ch03 The Lava Room
-    (to_pc_addr(0x18B142), to_pc_addr(0x18B19D)),   # Ch03 Lava Subroutine 1
-    (to_pc_addr(0x18B1F6), to_pc_addr(0x18B247)),   # Ch03 Lava Subroutine 2-8
-    (to_pc_addr(0x18D283), to_pc_addr(0x18D4CB)),   # Join/Leave Subroutines, Event Battles
-    (to_pc_addr(0x18D55F), to_pc_addr(0x18D665)),   # Travelling subroutine
-    (to_pc_addr(0x18D9D9), to_pc_addr(0x18D9EF))    #Event 17: Overworld
+                   # The end address should be 1 more than the desired end byte
+    (to_pc_addr(0x00CEE4), to_pc_addr(0x00CF48)),   # Loading save file
+    (to_pc_addr(0x00CFCF), to_pc_addr(0x00D01D)),   # Stage select stuff
+    (to_pc_addr(0x00D0A9), to_pc_addr(0x00D0D0)),   # I don't know
+    (to_pc_addr(0x00D375), to_pc_addr(0x00D40F)),   # Sound test
+    (to_pc_addr(0x018321), to_pc_addr(0x018A25)),   #Event 00: Game Init
+    (to_pc_addr(0x018A68), to_pc_addr(0x018B76)),   #Event 01: Moving Around
+    (to_pc_addr(0x018C85), to_pc_addr(0x019BD8)),   # Dungeon walking
+    (to_pc_addr(0x019BE5), to_pc_addr(0x01A1A3)),   # Map menu
+    (to_pc_addr(0x01A32F), to_pc_addr(0x01A39F)),   #Event 02
+    (to_pc_addr(0x01A477), to_pc_addr(0x01A4A2)),   #Event 03
+    (to_pc_addr(0x01B807), to_pc_addr(0x01B9B4)),   #Event 6A: Credits scene
+    (to_pc_addr(0x01BADC), to_pc_addr(0x01BB1A)),   # Credits stuff
+    (to_pc_addr(0x01BB57), to_pc_addr(0x01BB65)),   # Credits stuff
+    (to_pc_addr(0x01BBC8), to_pc_addr(0x01BC0A)),   # Credits stuff
+    (to_pc_addr(0x01BC51), to_pc_addr(0x01BC5F)),   #Event 6B: Staff Roll
+    (to_pc_addr(0x028001), to_pc_addr(0x0280EF)),   #Enemy 00: Slime
+    (to_pc_addr(0x03ADFE), to_pc_addr(0x03AE13)),   #Event 69: Nice
+    (to_pc_addr(0x03B88B), to_pc_addr(0x03BA79)),   # Towns; Movement, Axs house etc
+    (to_pc_addr(0x03BA99), to_pc_addr(0x03BB28)),   # Icorina house
+    (to_pc_addr(0x03BB35), to_pc_addr(0x03CC4B)),   # Event 68: Shop Gfx; Town Shop Handling
+    (to_pc_addr(0x03CDC2), to_pc_addr(0x03CFF4)),   # Field Sprites; Card Sprites
+    (to_pc_addr(0x03D00A), to_pc_addr(0x03D014)),   # Sub: Loop til A or B press
+    (to_pc_addr(0x058001), to_pc_addr(0x0581BF)),   #Event 04: Rooks
+    (to_pc_addr(0x058312), to_pc_addr(0x0587E3)),   #Event 05: Sylph; Load Attribute/Cond. color
+    (to_pc_addr(0x05884E), to_pc_addr(0x058999)),   #Event 06: Dao
+    (to_pc_addr(0x0589EB), to_pc_addr(0x058B36)),   #Event 07: Marid
+    (to_pc_addr(0x058B88), to_pc_addr(0x058CD3)),   #Event 08: Efrite
+    (to_pc_addr(0x058D25), to_pc_addr(0x058E09)),   #Event 09: Teefa
+    (to_pc_addr(0x058E19), to_pc_addr(0x058F09)),   # Teefa part 2
+    (to_pc_addr(0x058F57), to_pc_addr(0x0590BC)),   #Event 0A: Salah
+    (to_pc_addr(0x05910A), to_pc_addr(0x0592CA)),   #Event 0B: Darwin
+    (to_pc_addr(0x059318), to_pc_addr(0x05947D)),   #Event 0C: Axs
+    (to_pc_addr(0x0594CB), to_pc_addr(0x059640)),   #Event 0D-0F: Skull card;
+    (to_pc_addr(0x059650), to_pc_addr(0x059706)),   # Battle; Damage distortion, status display
+    (to_pc_addr(0x059716), to_pc_addr(0x059B0E)),   # Battle; Battle menu
+    (to_pc_addr(0x059B2E), to_pc_addr(0x059C35)),   # Battle; Spells
+    (to_pc_addr(0x059C59), to_pc_addr(0x059D4B)),   # Battle; Weapons, Cards, Defend, Run
+    (to_pc_addr(0x05F137), to_pc_addr(0x05F566)),   # Using items and spells
+    (to_pc_addr(0x05F5A7), to_pc_addr(0x05F5D2)),   # Animate enemy attack?
+    (to_pc_addr(0x05F5DF), to_pc_addr(0x05F5F2)),   # Ruinous Mission
+    (to_pc_addr(0x05F95F), to_pc_addr(0x05FA27)),   # Battle; Using Cards
+    (to_pc_addr(0x0F8001), to_pc_addr(0x0F817A)),   #Event 10: Battle Animations
+    (to_pc_addr(0x0FCB2B), to_pc_addr(0x0FCF31)),   #Event 11: Spell Animations
+    (to_pc_addr(0x17804D), to_pc_addr(0x17811B)),   #Event 14: Opening movie
+    (to_pc_addr(0x17828D), to_pc_addr(0x17833F)),   # Title Screen + Stage Select
+    (to_pc_addr(0x1784D2), to_pc_addr(0x17870B)),   # Opening + Prologue
+    (to_pc_addr(0x178BAF), to_pc_addr(0x178BCF)),   # Opening movie graphics loading
+    (to_pc_addr(0x178BEF), to_pc_addr(0x178C6E)),   #Event 15: Intro weather; etc
+    (to_pc_addr(0x18849C), to_pc_addr(0x1884E8)),   #Event 16: Treasure Chests
+    (to_pc_addr(0x1884F2), to_pc_addr(0x1884FC)),   # Some orphaned treasure chest code
+    (to_pc_addr(0x18968B), to_pc_addr(0x1896CA)),   #Event 12: Main Story
+    (to_pc_addr(0x1896CC), to_pc_addr(0x189732)),   #STORY 00: Ch01 Rooks intro
+    (to_pc_addr(0x189795), to_pc_addr(0x189841)),   #STORY 01: Ch01 Ariel/Teefa intro
+    (to_pc_addr(0x189843), to_pc_addr(0x189849)),   #STORY 02: Ch01 Leaving Galia
+    (to_pc_addr(0x18985D), to_pc_addr(0x189B7B)),   #STORY 03: Ch01 Crystal Sword room
+    (to_pc_addr(0x189C4B), to_pc_addr(0x189D72)),   # Ch01 end parts 1, 6
+    (to_pc_addr(0x189D96), to_pc_addr(0x189DB5)),   # Ch01 end part 5
+    (to_pc_addr(0x189DC9), to_pc_addr(0x189DF8)),   # Ch01 end part 4
+    (to_pc_addr(0x189E0C), to_pc_addr(0x189E36)),   # Ch01 end parts 2, 3
+    (to_pc_addr(0x18A002), to_pc_addr(0x18A131)),   #STORY 04: Ch02 Salah/Axs intro
+    (to_pc_addr(0x18A189), to_pc_addr(0x18A19B)),   # Ch02 start animations (enter Salah/Axs)
+    (to_pc_addr(0x18A1B7), to_pc_addr(0x18A2B0)),   #STORY 05: Ch02 Darwin intro
+    (to_pc_addr(0x18A2F0), to_pc_addr(0x18A355)),   # Ch02 Darwin animations
+    (to_pc_addr(0x18A369), to_pc_addr(0x18A41C)),   #STORY 06: Ch02 Darwin joins
+    (to_pc_addr(0x18A430), to_pc_addr(0x18A4AF)),   #STORY 07: Ch02 Darwin leaves
+    (to_pc_addr(0x18A4C3), to_pc_addr(0x18A82C)),   #STORY 08: Ch02 Reinoll visit
+    (to_pc_addr(0x18AA07), to_pc_addr(0x18AA53)),   # Ch02 Reinoll animations
+    (to_pc_addr(0x18AA80), to_pc_addr(0x18AB80)),   #STORY 09: Ch03 Axs's house
+    (to_pc_addr(0x18ABA0), to_pc_addr(0x18ABBD)),   # Ch03 Axs's house (animation)
+    (to_pc_addr(0x18ABD9), to_pc_addr(0x18AC87)),   #STORY 0A: Ch03 Axs is stoned
+    (to_pc_addr(0x18ACFF), to_pc_addr(0x18AD02)),   # Ch03 Axs stone animation
+    (to_pc_addr(0x18AD16), to_pc_addr(0x18AD45)),   #STORY 0B: Ch03 Getting Marid
+    (to_pc_addr(0x18AD51), to_pc_addr(0x18AFEC)),   #STORY 0C: Ch03 The Lava Room
+    (to_pc_addr(0x18B142), to_pc_addr(0x18B19E)),   # Ch03 Lava Subroutine 1
+    (to_pc_addr(0x18B1F6), to_pc_addr(0x18B248)),   # Ch03 Lava Subroutine 2-8
+    (to_pc_addr(0x18B254), to_pc_addr(0x18B385)),   #STORY 0D: Ch04 Axs talking
+    (to_pc_addr(0x18B405), to_pc_addr(0x18B435)),   # Ch04 Icorina house animations
+    (to_pc_addr(0x18B451), to_pc_addr(0x18B4DD)),   #STORY 0E: Vs Darah
+    (to_pc_addr(0x18B4FE), to_pc_addr(0x18B518)),   #STORY 0F: The door is closed
+    (to_pc_addr(0x18B537), to_pc_addr(0x18B612)),   #STORY 10: Salah awakens
+    (to_pc_addr(0x18B633), to_pc_addr(0x18B737)),   #STORY 11: The door is open
+    (to_pc_addr(0x18B753), to_pc_addr(0x18B827)),   #STORY 12: Vs Darah & Barah
+    (to_pc_addr(0x18B847), to_pc_addr(0x18B881)),   # Ch04 Dao 2 animations
+    (to_pc_addr(0x18B89D), to_pc_addr(0x18BA58)),   #STORY 13: If it's a trap...
+    (to_pc_addr(0x18BAF8), to_pc_addr(0x18BB27)),   # Ch04 Ariel animations
+    (to_pc_addr(0x18BB43), to_pc_addr(0x18BBA8)),   #STORY 14: Darwin joins
+    (to_pc_addr(0x18BBC4), to_pc_addr(0x18BCFA)),   #STORY 15: Vs Teefa
+    (to_pc_addr(0x18BD26), to_pc_addr(0x18BEE6)),   #STORY 16: Galneon monologue
+    (to_pc_addr(0x18BFBE), to_pc_addr(0x18BFCE)),   # Ch04 Some loop
+    (to_pc_addr(0x18C04D), to_pc_addr(0x18C0A2)),   # Ch04 More graphics
+    (to_pc_addr(0x18C0D1), to_pc_addr(0x18C0F7)),   # Ch04 More graphics
+    (to_pc_addr(0x18C1B3), to_pc_addr(0x18C1D5)),   # Ch04 RNG Door Sfx (why...?)
+    (to_pc_addr(0x18C226), to_pc_addr(0x18C357)),   #STORY 17: Darwin/Teefa yapping
+    (to_pc_addr(0x18C373), to_pc_addr(0x18C42A)),   #STORY 18: Vs Karul
+    (to_pc_addr(0x18C446), to_pc_addr(0x18C551)),   #STORY 19: Vs Galneon
+    (to_pc_addr(0x18C56D), to_pc_addr(0x18C665)),   #STORY 1A: Vs Red/Blue Guardians
+    (to_pc_addr(0x18C6A5), to_pc_addr(0x18C6D1)),   # Ch05 Guardian animations
+    (to_pc_addr(0x18C6ED), to_pc_addr(0x18C7D5)),   #STORY 1B: Vs Tiamat
+    (to_pc_addr(0x18C7F5), to_pc_addr(0x18C814)),   # Ch05 Darwin/Teefa leaving?
+    (to_pc_addr(0x18C840), to_pc_addr(0x18CC6A)),   #STORY 1C: Vs Rimsala (Final Door)
+    (to_pc_addr(0x18CD15), to_pc_addr(0x18CDCD)),   # Ch05 Rimsala brain burn
+    (to_pc_addr(0x18CE62), to_pc_addr(0x18D007)),   # Ch05 Final door 1-9, winning, setup epilogue
+    (to_pc_addr(0x18D283), to_pc_addr(0x18D4CC)),   # Join/Leave Subroutines, Event Battles
+    (to_pc_addr(0x18D55F), to_pc_addr(0x18D666)),   # Travelling subroutine
+    (to_pc_addr(0x18D9D9), to_pc_addr(0x18D9F0))    #Event 17: Overworld
 )
 
 DATA_TYPE_SIZES = {
