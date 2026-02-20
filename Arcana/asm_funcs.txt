@@ -431,7 +431,7 @@ ASM_FUNCTION 00CD55
   COMMENT = 
 
 ASM_FUNCTION 00CD7E
-  COMMENT = 
+  COMMENT = Load Save File Highlighting - Loads white and gray for [file1] [file2] [file3]. Returns 0 if no save files were detected.
 
 ASM_FUNCTION 00CDB7
   COMMENT = 
@@ -708,7 +708,7 @@ ASM_FUNCTION 03E2A8
   PARAMS  = label_24
 
 ASM_FUNCTION 03E317
-  COMMENT = Shop input checker - Returns button pressed (A=1, B=2, )
+  COMMENT = Shop input checker - Returns button pressed (no input=0, A=1, B=2, up/down=3, back 1 page=4, fwd 1 page=5)
 
 ASM_FUNCTION 03E4F8
   COMMENT = Store [RAM] into [RAM]
